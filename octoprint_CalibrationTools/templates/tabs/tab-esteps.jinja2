@@ -2,11 +2,12 @@
 
 {{ snipped.subSection("EEPROM values") }}
 
-{{ snipped.field("E steps", "number", "$root.steps.E", "false", "steps/mm") }}
+{{ snipped.field("E steps", "Number of steps/mm currently set in EEPROM", "number", "$root.steps.E", "false", "steps/mm") }}
 <div class="row-fluid">
     <div class="span6"></div>
     <div class="span6">
-        <button class="btn" data-bind="click: $root.loadStepsFromEPROM, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())">
+        <button class="btn" data-bind="click: $root.loadESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        title="Loads current value of steps/mm from current printer settings by calling M92">
             <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
             Load EEPROM data
         </button>
@@ -15,16 +16,28 @@
 
 {{ snipped.subSection("Compute", true) }}
 
-{{ snipped.field("Actual extrusion", "number", "$root.results.actualExtrusion", "false", "mm") }}
-{{ snipped.field("New steps value", "number", "$root.results.newSteps", "false", "steps/mm") }}
-{{ snipped.field("Extrusion marking length", "number", "$root.results.markLength", "true", "mm") }}
-{{ snipped.field("Measured value", "number", "$root.results.remainedLength", "true", "mm") }}
+<div class="row-fluid" style="margin-bottom: 5px;">
+    <div class="span6"></div>
+    <div class="span6">
+        <button class="btn btn-success" data-bind="click: $root.startExtrusion, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
+            <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
+            Start extrusion
+        </button>
+    </div>
+</div>
+
+{{ snipped.field("Actual extrusion", "How much filament has been extruded", "number", "$root.results.actualExtrusion", "false", "mm") }}
+{{ snipped.field("New steps/mm", "The new number of steps/mm which should be set on EEPROM", "number", "$root.results.newSteps", "false", "steps/mm") }}
+{{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion", "number", "$root.results.markLength", "true", "mm") }}
+{{ snipped.field("Measured value", "The length between filament mark and extruder entry after extrusion", "number", "$root.results.remainedLength", "true", "mm") }}
 <div class="row-fluid">
     <div class="span6"></div>
     <div class="span6">
-        <button class="btn btn-primary" data-bind="click: $root.calibrateESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())">
-            <i class="fas fa-play" data-color="#000000"></i>&nbsp&nbsp
-            Start calibration
+        <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        title="Saves the new calculated value of steps/mm on printer EEPROM">
+            <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
+            Set new value
         </button>
     </div>
 </div>
@@ -33,6 +46,6 @@
 {{ snipped.quote("
 First <a href='https://teachingtechyt.github.io/calibration.html#esteps' target='_blank'>Read this</a><br><br>
 This calibration is best done with the extruder detached from the hot end, so no restriction is present on the movement. If it is convenient, you can partially disassemble the printer so the output of the extruder is
-open and the filament exits in free air. If this is inconvenient, the process below aims to minimise restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
+open and the filament exits in free air. If this is inconvenient, the process below aims to minimize restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
 reliable.
 ", "text-warning" ) }}

@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, unicode_literals
 
 import flask
-CMD_LOAD_STEPS_EEPROM = "loadSteps"
+CMD_LOAD_STEPS = "loadSteps"
 
 
 class API:
@@ -16,11 +16,11 @@ class API:
     @staticmethod
     def get_api_commands():
         return {
-            CMD_LOAD_STEPS_EEPROM: []
+            CMD_LOAD_STEPS: []
         }
 
     def on_api_get(self, request):
-        self._logger.info("on api get")
+        self._logger.debug("api.on_api_get")
         return flask.jsonify(
             {
                 "data": self.m92Data
@@ -28,8 +28,8 @@ class API:
         )
 
     def on_api_command(self, command, data):
-        if command == CMD_LOAD_STEPS_EEPROM:
-            self._logger.info("CMD_LOAD_STEPS_EEPROM")
+        self._logger.debug("api command [%s] received", command)
+        if command == CMD_LOAD_STEPS:
             self._printer.commands("M92")
             return flask.jsonify({
                 "data": self.m92Data

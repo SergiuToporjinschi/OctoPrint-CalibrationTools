@@ -9,13 +9,15 @@ from __future__ import absolute_import
 #
 # Take a look at the documentation on what other plugin mixins are available.
 
+
 import octoprint.plugin
 import re
 from octoprint_CalibrationTools import (
     api
 )
 
-class CalibrationtoolsPlugin(octoprint.plugin.StartupPlugin,
+class CalibrationtoolsPlugin(
+    octoprint.plugin.StartupPlugin,
     octoprint.plugin.TemplatePlugin,
     octoprint.plugin.SettingsPlugin,
     octoprint.plugin.AssetPlugin,
@@ -34,21 +36,18 @@ class CalibrationtoolsPlugin(octoprint.plugin.StartupPlugin,
         self._api = api.API(self)
 
     def on_after_startup(self):
-        self._logger.info("----------------[CalibrationTools]----------------")
+        self._logger.debug("----------------[CalibrationTools]----------------")
         self.collectCommand = True
         self._printer.commands("M92")
 
     # API handling
     def get_api_commands(self):
-        self._logger.info("get_api_commands")
         return self._api.get_api_commands()
 
     def on_api_command(self, command, data):
-        self._logger.info("on_api_command")
         return self._api.on_api_command(command, data)
 
     def on_api_get(self, request):
-        self._logger.info("on_api_get")
         return self._api.on_api_get(request)
 
     ##~~ AssetPlugin mixin
@@ -60,9 +59,7 @@ class CalibrationtoolsPlugin(octoprint.plugin.StartupPlugin,
             "css": ["css/style.css"]
         }
 
-# self._printer.commands(commands)
-# extrude(amount, speed=None, tags=None, *args, **kwargs)
-# set_temperature(heater, value, tags=None, *args, **kwargs)
+
     ##~~ Softwareupdate hook
     def comm_protocol_gcode_received(self, comm, line, *args, **kwargs):
         if not self.collectCommand: return line
@@ -83,20 +80,20 @@ class CalibrationtoolsPlugin(octoprint.plugin.StartupPlugin,
                 self.m92Data["E"] = float(eValue)
 
                 # Send the new data to the UI to be reloaded
-                self._logger.info(line)
-                self._logger.info("gCode: %s", command)
-                self._logger.info("X: %s", xValue)
-                self._logger.info("Y: %s", yValue)
-                self._logger.info("Z: %s", zValue)
-                self._logger.info("E: %s", eValue)
-                self._logger.info("Finished data collection, updating UI")
+                self._logger.debug(line)
+                self._logger.debug("gCode: %s", command)
+                self._logger.debug("X: %s", xValue)
+                self._logger.debug("Y: %s", yValue)
+                self._logger.debug("Z: %s", zValue)
+                self._logger.debug("E: %s", eValue)
+                self._logger.debug("Finished data collection")
                 self.collectCommand = False
         return line
 
     def comm_protocol_gcode_sending(self, comm, phase, cmd, cmd_type, gcode, subcode=None, tags=None, *args, **kwargs):
-        # https://docs.octoprint.org/en/master/plugins/hooks.html#protocol_gcodephase_hook
+        self._logger.debug("sending GCODE")
         if cmd == "M92":
-            self._logger.info("{} detected, collecting data".format(cmd))
+            self._logger.debug("{} detected, collecting data".format(cmd))
             self.collectCommand = True
 
     def get_update_information(self):
@@ -138,5 +135,8 @@ def __plugin_load__():
 
     global __plugin_hooks__
     __plugin_hooks__ = {
-        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
+        "octoprint.comm.protocol.gcode.received": __plugin_implementation__.comm_protocol_gcode_received,
+        "octoprint.comm.protocol.gcode.sending": __plugin_implementation__.comm_protocol_gcode_sending
+        # "octoprint.comm.protocol.atcommand.sending": __plugin_implementation__.comm_protocol_atcommand_sending
     }

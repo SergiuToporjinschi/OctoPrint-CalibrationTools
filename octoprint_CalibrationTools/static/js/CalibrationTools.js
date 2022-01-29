@@ -1,14 +1,3 @@
-//Notification
-// new PNotify({
-//     title: "Success",
-//     text: _.sprintf(text, {
-//         command: _.escape(commandSpec.name)
-//     }),
-//     type: "success"
-// });
-
-
-
 $(function () {
     function CalibrationToolsViewModel(parameters) {
         var self = this;
@@ -54,19 +43,7 @@ $(function () {
             self.steps["E"](response.data.E);
         }
 
-        self.calibrateESteps = function () {
-            // OctoPrint.simpleApiCommand("loadSteps")
-            // OctoPrint.control.sendGcodeWithParameters("M92").done(function (responseM92) {
-            //     OctoPrint.simpleApiGet("CalibrationTools").done(function (response) {
-            //         console.log("CalibrationTools");
-            //         self.from_json(response);
-            //     });
-            // });
-            console.log("calibrateESteps");
-            console.log(self.steps.E(), self.results.remainedLength(), self.results.newSteps());
-        }
-
-        self.loadStepsFromEPROM = function () {
+        self.loadESteps = function () {
             OctoPrint.simpleApiCommand("CalibrationTools","loadSteps").done(function (response) {
                 self.from_json(response);
             })

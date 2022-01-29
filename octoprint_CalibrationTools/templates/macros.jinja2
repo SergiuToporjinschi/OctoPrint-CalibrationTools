@@ -17,17 +17,17 @@
 </blockquote>
 {% endmacro %}
 
-{% macro field(label, number, binding, enable, unit) %}
+{% macro field(label, title, number, binding, enable, unit) %}
 <div class="row-fluid">
     <div class="span6">
-        <label for="{{ label }}" class="pull-right" style="margin-top: 5px;">
+        <label for="{{ label }}" class="pull-right" style="margin-top: 5px;" title="{{ title }}">
             {{ _(label) }}
         </label>
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="{{ number }}" id="{{ label }}" class="input-small" step="0.01" data-bind="value: {{ binding }}, enable: {{ enable }}">
-            <span class="add-on">{{ _(unit) }}</span>
+            <input type="{{ number }}" id="{{ label }}" title="{{ title }}" class="input-small" step="0.01"  data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
         </div>
     </div>
 </div>

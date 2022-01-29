@@ -14,7 +14,7 @@
   border-radius: 4px;
 }
 
-#tab_plugin_CalibrationTools .tab-content {
+#tab_plugin_CalibrationTools .tab-content, #tab_plugin_CalibrationTools .tab-content > .tab-pane {
     border: none;
 }
 

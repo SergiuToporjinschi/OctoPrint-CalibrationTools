@@ -15,3 +15,24 @@ the plugin manager.
 ## Configuration
 
 **TODO:** Describe your plugin's configuration options (if any).
+
+
+
+
+
+
+## Regex for getting temperatures
+\s*T:(?P<toolTemp>\d{1,3}.\d{1,3}).*B:(?P<betTemp>\d{1,3}.\d{1,3}).*
+
+## extrude command from JS
+OctoPrint.printer.issueToolCommand("extrude", {"amount":100, "speed":50})
+
+
+## Notification JS
+new PNotify({
+    title: "Success",
+    text: _.sprintf(text, {
+        command: _.escape(commandSpec.name)
+    }),
+    type: "success"
+});
