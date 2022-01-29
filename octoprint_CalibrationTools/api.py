@@ -1,18 +1,12 @@
-# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, unicode_literals
 
+import octoprint.plugin
 import flask
+
 CMD_LOAD_STEPS = "loadSteps"
 
 
-class API:
-    def __init__(self, plugin):
-        self._settings = plugin._settings  # noqa
-        self._logger = plugin._logger  # noqa
-        self._printer = plugin._printer  # noqa
-        self.m92Data = plugin.m92Data  # noqa
-        self._plugin = plugin
-
+class API(octoprint.plugin.SimpleApiPlugin):
     @staticmethod
     def get_api_commands():
         return {
@@ -23,7 +17,7 @@ class API:
         self._logger.debug("api.on_api_get")
         return flask.jsonify(
             {
-                "data": self.m92Data
+                "data": self.data["steps"]
             }
         )
 
@@ -32,5 +26,5 @@ class API:
         if command == CMD_LOAD_STEPS:
             self._printer.commands("M92")
             return flask.jsonify({
-                "data": self.m92Data
+                "data": self.data["steps"]
             })
