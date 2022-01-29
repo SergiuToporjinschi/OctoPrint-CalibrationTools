@@ -1,0 +1,38 @@
+{% import "macros.jinja2" as snipped %}
+
+{{ snipped.subSection("EEPROM values") }}
+
+{{ snipped.field("E steps", "number", "$root.steps.E", "false", "steps/mm") }}
+<div class="row-fluid">
+    <div class="span6"></div>
+    <div class="span6">
+        <button class="btn" data-bind="click: $root.loadStepsFromEPROM, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())">
+            <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
+            Load EEPROM data
+        </button>
+    </div>
+</div>
+
+{{ snipped.subSection("Compute", true) }}
+
+{{ snipped.field("Actual extrusion", "number", "$root.results.actualExtrusion", "false", "mm") }}
+{{ snipped.field("New steps value", "number", "$root.results.newSteps", "false", "steps/mm") }}
+{{ snipped.field("Extrusion marking length", "number", "$root.results.markLength", "true", "mm") }}
+{{ snipped.field("Measured value", "number", "$root.results.remainedLength", "true", "mm") }}
+<div class="row-fluid">
+    <div class="span6"></div>
+    <div class="span6">
+        <button class="btn btn-primary" data-bind="click: $root.calibrateESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())">
+            <i class="fas fa-play" data-color="#000000"></i>&nbsp&nbsp
+            Start calibration
+        </button>
+    </div>
+</div>
+
+{{ snipped.subSection("Process description", true) }}
+{{ snipped.quote("
+First <a href='https://teachingtechyt.github.io/calibration.html#esteps' target='_blank'>Read this</a><br><br>
+This calibration is best done with the extruder detached from the hot end, so no restriction is present on the movement. If it is convenient, you can partially disassemble the printer so the output of the extruder is
+open and the filament exits in free air. If this is inconvenient, the process below aims to minimise restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
+reliable.
+", "text-warning" ) }}

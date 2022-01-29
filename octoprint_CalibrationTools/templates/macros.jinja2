@@ -1,0 +1,34 @@
+{% macro subSection(title, spaceBefore) %}
+{% if (spaceBefore) %} <br><br> {% endif %}
+<strong>{{ _(title) }}</strong>
+<hr>
+{% endmacro %}
+
+
+{% macro card(content, class) %}
+<div class="card">
+    <p class="{{ class }}">{{ _(content) }}</p>
+</div>
+{% endmacro %}
+
+{% macro quote(content, class) %}
+<blockquote>
+    <p class="{{ class }}">{{ _(content) }}</p>
+</blockquote>
+{% endmacro %}
+
+{% macro field(label, number, binding, enable, unit) %}
+<div class="row-fluid">
+    <div class="span6">
+        <label for="{{ label }}" class="pull-right" style="margin-top: 5px;">
+            {{ _(label) }}
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-append">
+            <input type="{{ number }}" id="{{ label }}" class="input-small" step="0.01" data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <span class="add-on">{{ _(unit) }}</span>
+        </div>
+    </div>
+</div>
+{% endmacro %}

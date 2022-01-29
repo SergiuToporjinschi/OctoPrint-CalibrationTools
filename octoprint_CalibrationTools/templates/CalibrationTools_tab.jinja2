@@ -1,0 +1,38 @@
+<div class="octo-tab-content">
+    <div class="row-fluid header">
+        <div class="span3 title">
+            <p>Calibration</p>
+        </div>
+        <div class="span8 title">
+            <!-- <button class="btn" data-bind="click: $root.tempRestart">
+                RESTART
+            </button> -->
+        </div>
+        <div class="span1 icon">
+            <a data-bind="click: $root.openCalibrationSettings">
+                <i class="fas fa-cog fa-lg" data-color="#ddd"></i>
+            </a>
+        </div>
+    </div>
+    <div class="main row-fluid">
+        <div class="span3">
+            <ul class="nav nav-list">
+                <li class="active">
+                    <a data-toggle="tab" href="#calibration_documentation">Documentation</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#calibration_x-y-z">X-Y-Z</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#calibration_eSteps">E-Steps</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#calibration_pid">PID</a>
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            {% include "tabs/tab-content.jinja2" %}
+        </div>
+    </div>
+</div>
