@@ -7,13 +7,13 @@ from octoprint_CalibrationTools import (api, hooks, models)
 
 defaultSettings = {
     "eSteps": {
-            "userControlsTemp": True,
-            "turnOffHeater": True,
-            "extrudeTemp": 210,
-            "extrudeLength": 100,
-            "extrudeSpeed": 50,
-            "markLength": 120
-        }
+        "userControlsTemp": True,
+        "turnOffHeater": True,
+        "extrudeTemp": 210,
+        "extrudeLength": 100,
+        "extrudeSpeed": 50,
+        "markLength": 120
+    }
 }
 
 class CalibrationtoolsPlugin(

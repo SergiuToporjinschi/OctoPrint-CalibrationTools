@@ -30,7 +30,7 @@ $(function () {
             return (self.steps.E() / self.results.actualExtrusion() * 100).toFixed(3);
         });
         self.results["newStepsDisplay"] = ko.computed(function () {
-            return "M92 E" + self.results.newSteps() ;
+            return "M92 E" + self.results.newSteps();
         });
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
@@ -64,9 +64,10 @@ $(function () {
         self.startExtrusion = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "startExtrusion").done(function (response) {
                 new PNotify({
-                    title: "Test request",
+                    title: "E axe calibration started",
                     text: "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ",
-                    type: "info"
+                    type: "warning",
+                    hide: false
                 });
                 console.log(response);
             })
