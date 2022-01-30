@@ -62,6 +62,7 @@ class Hooks():
                     self.events.remove(event)
 
     # Registering a temp event
+    # Trigger a function when the temparature
     def registerEventTemp(self, tool, targetTemp, func, *arguments):
         if func is None or not isinstance(func, collections.Callable):
             self._logger.warn("registerEventTemp: Attempt to register event without a function")

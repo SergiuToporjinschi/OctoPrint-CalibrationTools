@@ -62,15 +62,25 @@ $(function () {
         }
 
         self.startExtrusion = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools", "startExtrusion").done(function (response) {
+            OctoPrint.simpleApiCommand("CalibrationTools", "startExtrusion", {
+                "extrudeTemp": self.testParam.extrudeTemp(),
+                "extrudeLength": self.testParam.extrudeLength(),
+                "extrudeSpeed": self.testParam.extrudeSpeed()
+            }).done(function (response) {
                 new PNotify({
                     title: "E axe calibration started",
                     text: "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ",
-                    type: "warning",
-                    hide: false
+                    type: "warning"
                 });
                 console.log(response);
-            })
+            }).fail(function (response) {
+                new PNotify({
+                    title: "Error on starting extrusion ",
+                    text: response.responseJSON.error,
+                    type: "error",
+                    hide: false
+                });
+             })
         }
 
         self.tempRestart = function () {

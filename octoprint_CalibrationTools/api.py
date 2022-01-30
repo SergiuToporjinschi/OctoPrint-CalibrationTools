@@ -11,6 +11,7 @@ CMD_LOAD_STEPS = "loadSteps"
 CMD_START_EXTRUSION = "startExtrusion"
 CMD_SAVE_E_STEPS = "saveESteps"
 
+
 class API(octoprint.plugin.SimpleApiPlugin):
     @staticmethod
     def get_api_commands():
@@ -52,7 +53,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
             })
 
         if command == CMD_START_EXTRUSION:
-            self._logger.debug("Heating the tools")
+            self._logger.debug("Heating the extruder [%s]", data)
             if not self._printer.is_ready():
                 self._logger.warning("Printer not ready, operation canceled")
                 return flask.abort(503, {
@@ -60,14 +61,18 @@ class API(octoprint.plugin.SimpleApiPlugin):
                 })
 
             # Register event to be trigger when temp is achieved
-            self.registerEventTemp("T0", 180, self.startExtrusion)
+            self.registerEventTemp("T0", int(data["extrudeTemp"]), self.startExtrusion, data["extrudeLength"], data["extrudeSpeed"])
 
             # Heating the tool
-            self._printer.commands("M104 S180")
+            self._printer.commands("M104 S%(extrudeTemp)s" % data)
             return
 
         if command == CMD_SAVE_E_STEPS:
-            self._printer.commands(["M92 E%(newESteps)s" % data, "M500"])
+            cmds = ["M92 E%(newESteps)s" % data, "M500"]
+            if self.
+                cmds = cmds + ["M104 S0"]
+            self._printer.commands()
+
             return
 
         if command == CMD_TEST:
@@ -76,11 +81,12 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
 ############## HANDLERS ##############
     @staticmethod
-    def startExtrusion(self, temps, *args):
-        self._logger.debug("Temperature achieved, extrusion started %s, %s", temps, args)
+    def startExtrusion(self, temps, extrudeLength, extrudeSpeed, *args):
+        self._logger.debug("Temperature achieved, extrusion started [temps:%s, extrudeLength:%s, extrudeSpeed:%s, args:%s]",
+        temps, extrudeLength, extrudeSpeed, args)
 
         # Extrude
-        self._printer.extrude(amount=120, speed=50)
+        self._printer.extrude(amount=int(extrudeLength), speed=int(extrudeSpeed))
 
     @staticmethod
     def m92GCodeResponse(self, line, event):
