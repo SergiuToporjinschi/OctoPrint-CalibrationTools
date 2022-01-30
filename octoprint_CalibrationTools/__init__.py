@@ -5,6 +5,14 @@ import octoprint.plugin
 
 from octoprint_CalibrationTools import (api, hooks, models)
 
+defaultSettings = {
+    "eSteps": {
+            "extrudeTemp": 210,
+            "extrudeLength": 100,
+            "extrudeSpeed": 50,
+            "markLength": 120
+        }
+}
 
 class CalibrationtoolsPlugin(
     octoprint.plugin.StartupPlugin,
@@ -35,6 +43,25 @@ class CalibrationtoolsPlugin(
             "js": ["js/CalibrationTools.js"],
             "css": ["css/style.css"]
         }
+
+    def get_settings_defaults(self):
+        return defaultSettings
+
+    def get_template_configs(self):
+        return [
+            {
+                "type": "tab",
+                "name": "Calibration Tools",
+                "template": "CalibrationTools_tab.jinja2",
+                "custom_bindings": True,
+            },
+            {
+                "type": "settings",
+                "name": "Calibration settings",
+                "template": "CalibrationTools_settings.jinja2",
+                "custom_bindings": False,
+            },
+        ]
 
     def get_update_information(self):
         # Define the configuration for your plugin to use with the Software Update

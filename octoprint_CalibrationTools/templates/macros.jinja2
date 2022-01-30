@@ -17,7 +17,8 @@
 </blockquote>
 {% endmacro %}
 
-{% macro field(label, title, type, binding, enable, unit) %}
+{% macro field(label, title, type, binding, enable, unit, step) %}
+{% set step = step|default('0.01') %}
 <div class="row-fluid">
     <div class="span6">
         <label for="{{ label }}" class="pull-right" style="margin-top: 5px;" title="{{ title }}">
@@ -26,7 +27,7 @@
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="0.01"  data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}"  data-bind="value: {{ binding }}, enable: {{ enable }}">
             <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
         </div>
     </div>

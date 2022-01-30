@@ -1,6 +1,7 @@
 $(function () {
     function CalibrationToolsViewModel(parameters) {
         var self = this;
+        console.log(gettext("test"));
         self.loginStateViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
         self.controlViewModel = parameters[2];

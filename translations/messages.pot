@@ -1,0 +1,24 @@
+# Translations template for OctoPrint-CalibrationTools.
+# Copyright (C) 2022 The OctoPrint Project
+# This file is distributed under the same license as the
+# OctoPrint-CalibrationTools project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OctoPrint-CalibrationTools 0.1.0\n"
+"Report-Msgid-Bugs-To: i18n@octoprint.org\n"
+"POT-Creation-Date: 2022-01-30 12:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: octoprint_CalibrationTools/static/js/CalibrationTools.js:4
+msgid "test"
+msgstr "something"
+

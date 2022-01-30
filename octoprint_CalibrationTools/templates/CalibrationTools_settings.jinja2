@@ -1,7 +1,29 @@
-<div class="container">
-    <h3>Something in settings</h3>
-    <div class="row"><span class="title col">Actual extrusion:         </span> <span class="val col" data-bind="text: $root.results.actualExtrusion"></span></div>
-    <div class="row"><span class="title col">New steps value:          </span> <span class="val col" data-bind="text: $root.results.newSteps"> </span></div>
-    <div class="row"><span class="title col">Extrusion marking length: </span> <input class="val col" type="number"  step="0.01" class="numberInputField" data-bind="value: $root.results.markLength" ></div>
-    <div class="row"><span class="title col">Measured value:           </span> <input class="val col" type="number"  step="0.01" class="numberInputField" data-bind="value: $root.results.remainedLength" ></div>
-</div>
+{% import "macros.jinja2" as snipped %}
+{{ snipped.subSection("E-Steps default settings", true) }}
+
+{{ snipped.field("Extrusion temperature", "The temperature used to extrude in testing&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure",
+     "number", "settings.plugins.CalibrationTools.eSteps.extrudeTemp", "true", "&ordmC", 1) }}
+
+{{ snipped.field("Filament extrusion length", "The length of filament to be extruded in testing",
+     "number", "settings.plugins.CalibrationTools.eSteps.extrudeLength", "true", "mm", 1) }}
+
+{{ snipped.field("Filament extrusion speed", "How fast the filament should be extruded in test&#013;A lower value is recommended for avoiding skipping steps",
+     "number", "settings.plugins.CalibrationTools.eSteps.extrudeSpeed", "true", "mm/s", 1) }}
+
+{{ snipped.field("Filament mark length", "The length marked on filament",
+     "number", "settings.plugins.CalibrationTools.eSteps.markLength", "true", "mm") }}
+
+<!-- <div class="row-fluid">
+    <div class="span6">
+        <label for="temperature" class="pull-right" style="margin-top: 5px;" title="x">
+            Heating
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-prepend input-append">
+            <span class="add-on" title="Command to preheat the tool before testing">M104 &nbsp&nbsp&nbspS</span>
+            <input type="number" id="temperature" title="The temperature used to extrude in testing&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" class="input-mini" step="1"
+                data-bind="value: $root.testParam.extrudeTemp">
+        </div>
+    </div>
+</div> -->

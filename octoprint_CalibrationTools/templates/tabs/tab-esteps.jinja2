@@ -12,7 +12,7 @@
     <div class="span6">
         <div class="input-prepend input-append">
             <span class="add-on" title="Command to preheat the tool before testing">M104 &nbsp&nbsp&nbspS</span>
-            <input type="number" id="temperature" title="The temperature used to extrude in testing&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" class="input-mini" step="1"
+            <input type="number" id="temperature" title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" class="input-mini" step="1"
                 data-bind="value: $root.testParam.extrudeTemp">
         </div>
     </div>
@@ -27,10 +27,10 @@
     <div class="span6">
         <div class="input-prepend input-append">
             <span class="add-on" title="Command to extrude filament for testing">G1&nbsp&nbsp&nbspE</span>
-            <input type="number" id="extrusionLenSpeed" title="The length of filament to be extruded in testing" class="input-mini" step="1"
+            <input type="number" id="extrusionLenSpeed" title="The length of filament to be extruded in testing (in millimeters)" class="input-mini" step="1"
                 data-bind="value: $root.testParam.extrudeLength">
             <span class="add-on" title="Command to extrude filament for testing">&nbsp&nbsp&nbspF</span>
-            <input type="number" id="extrusionLenSpeed" title="The speed to extrude filament in testing&#013;Lowest possible" class="input-mini" step="1"
+            <input type="number" id="extrusionLenSpeed" title="The speed to extrude filament in testing&#013;Lowest possible (mm/s)" class="input-mini" step="1"
                 data-bind="value: $root.testParam.extrudeSpeed">
         </div>
     </div>
@@ -92,3 +92,5 @@ This calibration is best done with the extruder detached from the hot end, so no
 open and the filament exits in free air. If this is inconvenient, the process below aims to minimize restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
 reliable.
 ", "text-warning" ) }}
+
+<strong data-bind="text: gettext('test')"></strong>
