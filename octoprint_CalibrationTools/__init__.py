@@ -82,5 +82,4 @@ def __plugin_load__():
         "octoprint.comm.protocol.gcode.received": __plugin_implementation__.gCodeReceived,
         "octoprint.comm.protocol.gcode.sending": __plugin_implementation__.gCodeSending,
         "octoprint.comm.protocol.temperatures.received": __plugin_implementation__.processTemp
-        # "octoprint.comm.protocol.atcommand.sending": __plugin_implementation__.comm_protocol_atcommand_sending
     }

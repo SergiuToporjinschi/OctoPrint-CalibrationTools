@@ -70,6 +70,7 @@ class Hooks():
                     threading.Thread(target=event["func"], args=(self, temps, *event["args"])).start()
                     self.events.remove(event)
 
+    ## Registering a temp event
     def registerEventTemp(self, tool, targetTemp, func, *arguments):
         if func is None:
             self._logger.warn("registerEventTemp: Attempt to register event without a function")
