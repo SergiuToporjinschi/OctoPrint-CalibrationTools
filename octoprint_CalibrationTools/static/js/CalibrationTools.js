@@ -14,7 +14,6 @@ $(function () {
         self.steps["Y"] = ko.observable();
         self.steps["Z"] = ko.observable();
         self.steps["E"] = ko.observable();
-        self.results = {};
 
         self.testParam = {};
         self.testParam["extrudeTemp"] = ko.observable(210);
@@ -22,17 +21,23 @@ $(function () {
         self.testParam["extrudeSpeed"] = ko.observable(50);
         self.testParam["markLength"] = ko.observable(120);
 
+        self.results = {};
         self.results["remainedLength"] = ko.observable(20);
-
         self.results["actualExtrusion"] = ko.computed(function () {
             return (self.testParam.markLength() - self.results.remainedLength()).toFixed(3);
         });
-
         self.results["newSteps"] = ko.computed(function () {
             return (self.steps.E() / self.results.actualExtrusion() * 100).toFixed(3);
         });
+        self.results["newStepsDisplay"] = ko.computed(function () {
+            return "M92 E" + self.results.newSteps() ;
+        });
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
+            self.testParam.extrudeTemp(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeTemp());
+            self.testParam.extrudeLength(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeLength());
+            self.testParam.extrudeSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeSpeed());
+            self.testParam.markLength(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.markLength());
             self.is_admin(self.loginStateViewModel.isAdmin());
         }
 
@@ -51,7 +56,7 @@ $(function () {
         }
 
         self.loadESteps = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools","loadSteps").done(function (response) {
+            OctoPrint.simpleApiCommand("CalibrationTools", "loadSteps").done(function (response) {
                 self.from_json(response);
             })
         }
@@ -71,7 +76,15 @@ $(function () {
             OctoPrint.system.executeCommand("core", "restart");
         }
         self.saveESteps = function () {
-            OctoPrint.system.executeCommand("core", "restart");
+            OctoPrint.simpleApiCommand("CalibrationTools", "saveESteps", {
+                "newESteps": self.results.newSteps()
+            }).done(function () {
+                new PNotify({
+                    title: "Saved",
+                    text: self.results.newSteps() + " steps/mm had been set for E axe",
+                    type: "info"
+                });
+            });
         }
 
         self.onAllBound = self.onEventConnected = function () {

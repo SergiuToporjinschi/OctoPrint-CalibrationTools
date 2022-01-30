@@ -11,9 +11,10 @@
 </div>
 {% endmacro %}
 
-{% macro quote(content, class) %}
+{% macro quote(content, cite, class) %}
 <blockquote>
     <p class="{{ class }}">{{ _(content) }}</p>
+    <small>{{ cite }}</small>
 </blockquote>
 {% endmacro %}
 
@@ -27,7 +28,7 @@
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}"  data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}" data-bind="value: {{ binding }}, enable: {{ enable }}">
             <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
         </div>
     </div>

@@ -13,8 +13,7 @@ class Hooks():
     events = []
 
     def gCodeReceived(self, comm, line, *args, **kwargs):
-        if not self.collectCommand:
-            return line
+        if not self.collectCommand: return line
         self._logger.debug("collectCommand is true, collecting info")
 
         reg = re.compile("echo:\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
