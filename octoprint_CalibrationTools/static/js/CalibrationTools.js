@@ -66,6 +66,13 @@ $(function () {
                 self.from_json(response);
             });
         }
+
+        self.test = function () {
+            OctoPrint.simpleApiCommand("CalibrationTools","TEST").done(function (response) {
+                console.log(response)
+            })
+        }
+
     }
 
     // This is how our plugin registers itself with the application, by adding some configuration

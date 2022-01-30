@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 class CalibrationModel():
     def getModel(self):
         self._logger.debug("getModel")
         steps = self.getSteps()
+        temps = self.getTemps()
         return {
-            "steps": steps
+            "steps": steps,
+            "temps": temps
         }
 
     def getSteps(self):
@@ -14,3 +19,7 @@ class CalibrationModel():
             "Z": 0,
             "E": 0
         }
+
+    def getTemps(self):
+        return {'B': (), 'T0': ()}
+

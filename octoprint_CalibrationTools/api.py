@@ -1,4 +1,5 @@
-from __future__ import absolute_import, division, unicode_literals
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import octoprint.plugin
 import flask
@@ -6,11 +7,16 @@ import flask
 CMD_LOAD_STEPS = "loadSteps"
 
 
+def someTestFunc(self, temps, a, b):
+    self._logger.debug("a ajuns %s, %s, %s", temps, a,b)
+
+
 class API(octoprint.plugin.SimpleApiPlugin):
     @staticmethod
     def get_api_commands():
         return {
-            CMD_LOAD_STEPS: []
+            CMD_LOAD_STEPS: [],
+            "TEST": []
         }
 
     def on_api_get(self, request):
@@ -28,3 +34,6 @@ class API(octoprint.plugin.SimpleApiPlugin):
             return flask.jsonify({
                 "data": self.data["steps"]
             })
+        if command == "TEST":
+            self.registerEventTemp("T0", 100, someTestFunc, 1,"test")
+            return

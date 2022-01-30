@@ -1,5 +1,5 @@
-# coding=utf-8
-from __future__ import absolute_import
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import octoprint.plugin
 
@@ -16,13 +16,14 @@ class CalibrationtoolsPlugin(
     models.CalibrationModel
 ):
     collectCommand = False
+    data = {}
 
     def initialize(self):
         self.collectCommand = False
         # self._api = api.API(self)
 
     def on_after_startup(self):
-        self._logger.debug("----------------[CalibrationTools]----------------")
+        self._logger.debug("----------------[ CalibrationTools ]----------------")
         self.data = self.getModel()
         self.collectCommand = True
         self._printer.commands("M92")
@@ -77,7 +78,9 @@ def __plugin_load__():
     global __plugin_hooks__
     __plugin_hooks__ = {
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
-        "octoprint.comm.protocol.gcode.received": __plugin_implementation__.calibrateGCodeReceived,
-        "octoprint.comm.protocol.gcode.sending": __plugin_implementation__.calibrateGCodeSending
+        "octoprint.comm.protocol.firmware.info": __plugin_implementation__.firmwareInfo,
+        "octoprint.comm.protocol.gcode.received": __plugin_implementation__.gCodeReceived,
+        "octoprint.comm.protocol.gcode.sending": __plugin_implementation__.gCodeSending,
+        "octoprint.comm.protocol.temperatures.received": __plugin_implementation__.processTemp
         # "octoprint.comm.protocol.atcommand.sending": __plugin_implementation__.comm_protocol_atcommand_sending
     }
