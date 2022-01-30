@@ -72,6 +72,7 @@ class Hooks():
                 if event["tool"] == tool and curTemp >= event["targetTemp"]:
                     arg = (temps, *event["args"])
                     if isinstance(event["func"], types.FunctionType):
+                        self._logger.debug("addSelf")
                         arg = (self, *arg)
                     threading.Thread(target=event["func"], args=arg).start()
                     self.events.remove(event)
@@ -88,5 +89,5 @@ class Hooks():
             "func": func,
             "args": arguments
         }
-        self._logger.debug("Registering event [%s]", event)
+        self._logger.debug("Registering event [%s, isFunction: %s]", event, isinstance(func, types.FunctionType))
         self.events.append(event)

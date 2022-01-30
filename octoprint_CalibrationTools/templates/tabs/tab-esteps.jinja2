@@ -1,20 +1,42 @@
 {% import "macros.jinja2" as snipped %}
 
-{{ snipped.subSection("EEPROM values") }}
+{{ snipped.subSection("Test parameters", true) }}
 
-{{ snipped.field("E steps", "Number of steps/mm currently set in EEPROM", "number", "$root.steps.E", "false", "steps/mm") }}
+<!-- G1 E100 F50 command  -->
 <div class="row-fluid">
-    <div class="span6"></div>
     <div class="span6">
-        <button class="btn" data-bind="click: $root.loadESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
-        title="Loads current value of steps/mm from current printer settings by calling M92">
-            <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
-            Load EEPROM data
-        </button>
+        <label for="temperature" class="pull-right" style="margin-top: 5px;" title="x">
+            Heating
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-prepend input-append">
+            <span class="add-on" title="Command to preheat the tool before testing">M104 &nbsp&nbsp&nbspS</span>
+            <input type="number" id="temperature" title="The temperature used to extrude in testing&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" class="input-mini" step="1"
+                data-bind="value: $root.testParam.extrudeTemp">
+        </div>
     </div>
 </div>
 
-{{ snipped.subSection("Compute", true) }}
+<div class="row-fluid">
+    <div class="span6">
+        <label for="extrusionLenSpeed" class="pull-right" style="margin-top: 5px;" title="x">
+            Extrusion length & speed
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-prepend input-append">
+            <span class="add-on" title="Command to extrude filament for testing">G1&nbsp&nbsp&nbspE</span>
+            <input type="number" id="extrusionLenSpeed" title="The length of filament to be extruded in testing" class="input-mini" step="1"
+                data-bind="value: $root.testParam.extrudeLength">
+            <span class="add-on" title="Command to extrude filament for testing">&nbsp&nbsp&nbspF</span>
+            <input type="number" id="extrusionLenSpeed" title="The speed to extrude filament in testing&#013;Lowest possible" class="input-mini" step="1"
+                data-bind="value: $root.testParam.extrudeSpeed">
+        </div>
+    </div>
+</div>
+
+{{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion. ", "number", "$root.testParam.markLength", "true", "mm") }}
 
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div class="span6"></div>
@@ -27,20 +49,41 @@
     </div>
 </div>
 
+{{ snipped.subSection("Test results", true) }}
+
+<div class="row-fluid">
+    <div class="span6">
+        <label for="eSteps" class="pull-right" style="margin-top: 5px;" title="Current value for number of steps/mm for E axe in EEPROM">
+            E steps
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-append">
+            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01"
+                data-bind="value: $root.steps.E, enable:false">
+            <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
+            <button class="btn" data-bind="click: $root.loadESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            title="Loads current value of steps/mm from EEPROM by calling M92">
+                <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
+            </button>
+        </div>
+    </div>
+</div>
+
+{{ snipped.field("Length after extrusion", "The remained length between filament mark and extruder entry", "number", "$root.results.remainedLength", "true", "mm") }}
 {{ snipped.field("Actual extrusion", "How much filament has been extruded", "number", "$root.results.actualExtrusion", "false", "mm") }}
 {{ snipped.field("New steps/mm", "The new number of steps/mm which should be set on EEPROM", "number", "$root.results.newSteps", "false", "steps/mm") }}
-{{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion", "number", "$root.results.markLength", "true", "mm") }}
-{{ snipped.field("Measured value", "The length between filament mark and extruder entry after extrusion", "number", "$root.results.remainedLength", "true", "mm") }}
-<div class="row-fluid">
+<div class="row-fluid" style="margin-bottom: 5px;">
     <div class="span6"></div>
     <div class="span6">
         <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
         title="Saves the new calculated value of steps/mm on printer EEPROM">
             <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
-            Set new value
+            Save the new value
         </button>
     </div>
 </div>
+
 
 {{ snipped.subSection("Process description", true) }}
 {{ snipped.quote("
@@ -49,5 +92,3 @@ This calibration is best done with the extruder detached from the hot end, so no
 open and the filament exits in free air. If this is inconvenient, the process below aims to minimize restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
 reliable.
 ", "text-warning" ) }}
-
-

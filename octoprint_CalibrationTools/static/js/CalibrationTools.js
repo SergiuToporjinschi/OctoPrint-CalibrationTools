@@ -15,10 +15,16 @@ $(function () {
         self.steps["E"] = ko.observable();
         self.results = {};
 
+        self.testParam = {};
+        self.testParam["extrudeTemp"] = ko.observable(210);
+        self.testParam["extrudeLength"] = ko.observable(100);
+        self.testParam["extrudeSpeed"] = ko.observable(50);
+        self.testParam["markLength"] = ko.observable(120);
+
         self.results["remainedLength"] = ko.observable(20);
-        self.results["markLength"] = ko.observable(120);
+
         self.results["actualExtrusion"] = ko.computed(function () {
-            return (self.results.markLength() - self.results.remainedLength()).toFixed(3);
+            return (self.testParam.markLength() - self.results.remainedLength()).toFixed(3);
         });
 
         self.results["newSteps"] = ko.computed(function () {
@@ -47,14 +53,15 @@ $(function () {
             OctoPrint.simpleApiCommand("CalibrationTools","loadSteps").done(function (response) {
                 self.from_json(response);
             })
-            // OctoPrint.simpleApiGet("CalibrationTools").done(function (response) {
-            //     console.log("CalibrationTools");
-            //     self.from_json(response);
-            // });
         }
 
         self.startExtrusion = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools","startExtrusion").done(function (response) {
+            OctoPrint.simpleApiCommand("CalibrationTools", "startExtrusion").done(function (response) {
+                new PNotify({
+                    title: "Test request",
+                    text: "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ",
+                    type: "info"
+                });
                 console.log(response);
             })
         }
@@ -62,8 +69,8 @@ $(function () {
         self.tempRestart = function () {
             OctoPrint.system.executeCommand("core", "restart");
         }
-        self.runCommand = function () {
-            OctoPrint.control.sendGcodeWithParameters("G90");
+        self.saveESteps = function () {
+            OctoPrint.system.executeCommand("core", "restart");
         }
 
         self.onAllBound = self.onEventConnected = function () {
@@ -74,8 +81,14 @@ $(function () {
         }
 
         self.test = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools","TEST").done(function (response) {
+            OctoPrint.simpleApiCommand("CalibrationTools", "TEST").done(function (response) {
                 console.log(response)
+            }).fail(function (response) {
+                new PNotify({
+                    title: "Test request",
+                    text: response.responseJSON.error.msg,
+                    type: "error"
+                });
             })
         }
 
