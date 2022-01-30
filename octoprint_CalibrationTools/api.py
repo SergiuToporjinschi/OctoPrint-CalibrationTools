@@ -4,11 +4,13 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import octoprint.plugin
 import flask
 
+
 CMD_LOAD_STEPS = "loadSteps"
+CMD_TEST = "TEST"
+CMD_START_EXTRUSION = "startExtrusion"
 
-
-def someTestFunc(self, temps, a, b):
-    self._logger.debug("a ajuns %s, %s, %s", temps, a,b)
+def someTestFunc(self, temps):
+    self._logger.debug("a ajuns %s", temps)
 
 
 class API(octoprint.plugin.SimpleApiPlugin):
@@ -16,7 +18,8 @@ class API(octoprint.plugin.SimpleApiPlugin):
     def get_api_commands():
         return {
             CMD_LOAD_STEPS: [],
-            "TEST": []
+            CMD_START_EXTRUSION: [],
+            CMD_TEST: []
         }
 
     def on_api_get(self, request):
@@ -34,6 +37,12 @@ class API(octoprint.plugin.SimpleApiPlugin):
             return flask.jsonify({
                 "data": self.data["steps"]
             })
-        if command == "TEST":
-            self.registerEventTemp("T0", 100, someTestFunc, 1,"test")
+        if command == CMD_START_EXTRUSION:
+            self._logger.debug("Heating the tools")
+            self._printer.commands("M104 S180")
+            self.registerEventTemp("T0", 180, self.startExtrusion)
+
+            return
+        if command == CMD_TEST:
+            self.registerEventTemp("T0", 100, someTestFunc)
             return

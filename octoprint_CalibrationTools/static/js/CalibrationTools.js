@@ -53,6 +53,12 @@ $(function () {
             // });
         }
 
+        self.startExtrusion = function () {
+            OctoPrint.simpleApiCommand("CalibrationTools","startExtrusion").done(function (response) {
+                console.log(response);
+            })
+        }
+
         self.tempRestart = function () {
             OctoPrint.system.executeCommand("core", "restart");
         }

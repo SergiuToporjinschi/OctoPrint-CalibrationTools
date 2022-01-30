@@ -5,6 +5,8 @@ from ast import arg
 import re
 import threading
 import traceback
+import types
+
 
 class Hooks():
     trackTemp = True
@@ -50,27 +52,31 @@ class Hooks():
             "firmware": firmware_data
         }
 
-    ## Hook for temperature messages
-    ## This is active only when there are events registered to temperature changes
+    # Hook for temperature messages
+    # This is active only when there are events registered to temperature changes
     def processTemp(self, comm_instance, parsed_temperatures, *args, **kwargs):
-        if len(self.events) <= 0: return parsed_temperatures
+        if len(self.events) <= 0:
+            return parsed_temperatures
         try:
             self.checkAndTriggerEvent(parsed_temperatures.copy())
         except Exception as e:
             self._logger.error(traceback.format_exc())
         return parsed_temperatures
 
-    ## Check if the current message contains changes concerning registered tool
-    ## if the criteria is meat then the execution function is called
+    # Check if the current message contains changes concerning registered tool
+    # if the criteria is meat then the execution function is called
     def checkAndTriggerEvent(self, temps):
         for tool, values in temps.items():
             (curTemp, trgTemp) = values
             for event in self.events:
                 if event["tool"] == tool and curTemp >= event["targetTemp"]:
-                    threading.Thread(target=event["func"], args=(self, temps, *event["args"])).start()
+                    arg = (temps, *event["args"])
+                    if isinstance(event["func"], types.FunctionType):
+                        arg = (self, *arg)
+                    threading.Thread(target=event["func"], args=arg).start()
                     self.events.remove(event)
 
-    ## Registering a temp event
+    # Registering a temp event
     def registerEventTemp(self, tool, targetTemp, func, *arguments):
         if func is None:
             self._logger.warn("registerEventTemp: Attempt to register event without a function")

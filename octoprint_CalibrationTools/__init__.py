@@ -36,6 +36,8 @@ class CalibrationtoolsPlugin(
             "js": ["js/CalibrationTools.js"],
             "css": ["css/style.css"]
         }
+    def startExtrusion(self, temps):
+        self._logger.debug("Temperature achieved, extrusion started %s", temps)
 
     def get_update_information(self):
         # Define the configuration for your plugin to use with the Software Update
