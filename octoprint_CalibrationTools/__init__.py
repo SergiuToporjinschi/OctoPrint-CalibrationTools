@@ -108,6 +108,5 @@ def __plugin_load__():
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
         "octoprint.comm.protocol.firmware.info": __plugin_implementation__.firmwareInfo,
         "octoprint.comm.protocol.gcode.received": __plugin_implementation__.gCodeReceived,
-        "octoprint.comm.protocol.gcode.sending": __plugin_implementation__.gCodeSending,
         "octoprint.comm.protocol.temperatures.received": __plugin_implementation__.processTemp
     }

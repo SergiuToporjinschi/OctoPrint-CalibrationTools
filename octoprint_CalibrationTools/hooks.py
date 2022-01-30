@@ -6,45 +6,30 @@ import re
 import threading
 import traceback
 import types
+import collections
 
 
 class Hooks():
     trackTemp = True
     events = []
+    gCodeWaiters = []
 
     def gCodeReceived(self, comm, line, *args, **kwargs):
-        if not self.collectCommand: return line
-        self._logger.debug("collectCommand is true, collecting info")
+        if len(self.gCodeWaiters) <= 0 and not line.startswith('echo:'):
+            return line
 
-        reg = re.compile("echo:\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
-        isM92command = reg.match(line)
-        if isM92command:
-            command = isM92command.group("command")
-            if isM92command.group("gCode") == "M92":
-                xValue = isM92command.group("xVal")
-                yValue = isM92command.group("yVal")
-                zValue = isM92command.group("zVal")
-                eValue = isM92command.group("eVal")
-                self.data["steps"]["X"] = float(xValue)
-                self.data["steps"]["Y"] = float(yValue)
-                self.data["steps"]["Z"] = float(zValue)
-                self.data["steps"]["E"] = float(eValue)
-
-                # Send the new data to the UI to be reloaded
-                self._logger.debug(line)
-                self._logger.debug("gCode: %s", command)
-                self._logger.debug("X: %s", xValue)
-                self._logger.debug("Y: %s", yValue)
-                self._logger.debug("Z: %s", zValue)
-                self._logger.debug("E: %s", eValue)
-                self._logger.debug("Finished data collection")
-                self.collectCommand = False
+        reg = re.compile("echo:\s*(?P<gCode>M\d{1,4})")
+        mCommand = reg.match(line)
+        if mCommand:
+            gCode = mCommand.group("gCode")
+            for waiter in self.gCodeWaiters:
+                if gCode.upper() == waiter["cmd"]:
+                    arg = (line, *waiter["args"])
+                    if isinstance(waiter["func"], types.FunctionType):
+                        arg = (self, *arg)
+                    threading.Thread(target=waiter["func"], args=arg).start()
+                    self.gCodeWaiters.remove(waiter)
         return line
-
-    def gCodeSending(self, comm, phase, cmd, cmd_type, gcode, subcode=None, tags=None, *args, **kwargs):
-        self._logger.debug("Sending GCODE [%s]", gcode)
-        if cmd == "M92":
-            self.collectCommand = True
 
     def firmwareInfo(self, comm_instance, firmware_name, firmware_data, *args, **kwargs):
         self.data["info"] = {
@@ -56,6 +41,7 @@ class Hooks():
     def processTemp(self, comm_instance, parsed_temperatures, *args, **kwargs):
         if len(self.events) <= 0:
             return parsed_temperatures
+
         try:
             self.checkAndTriggerEvent(parsed_temperatures.copy())
         except Exception as e:
@@ -71,14 +57,13 @@ class Hooks():
                 if event["tool"] == tool and curTemp >= event["targetTemp"]:
                     arg = (temps, *event["args"])
                     if isinstance(event["func"], types.FunctionType):
-                        self._logger.debug("addSelf")
                         arg = (self, *arg)
                     threading.Thread(target=event["func"], args=arg).start()
                     self.events.remove(event)
 
     # Registering a temp event
     def registerEventTemp(self, tool, targetTemp, func, *arguments):
-        if func is None:
+        if func is None or not isinstance(func, collections.Callable):
             self._logger.warn("registerEventTemp: Attempt to register event without a function")
             return
 
@@ -90,3 +75,14 @@ class Hooks():
         }
         self._logger.debug("Registering event [%s, isFunction: %s]", event, isinstance(func, types.FunctionType))
         self.events.append(event)
+
+    # Registering a gCodeWaiter
+    def registerGCodeWaiter(self, command, func, *arguments):
+        if command is None or not re.compile("(?P<gCode>M\d{1,4})").match(command.upper()) or func is None or not isinstance(func, collections.Callable):
+            self._logger.warn("registerGCodeAnswer: Attempt to register gCodeAnswer without a function or gCode command")
+            return
+        self.gCodeWaiters.append({
+            "cmd": command.upper(),
+            "func": func,
+            "args": arguments
+        })

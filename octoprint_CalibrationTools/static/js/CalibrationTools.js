@@ -76,6 +76,7 @@ $(function () {
         self.tempRestart = function () {
             OctoPrint.system.executeCommand("core", "restart");
         }
+
         self.saveESteps = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "saveESteps", {
                 "newESteps": self.results.newSteps()
