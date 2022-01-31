@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import octoprint.plugin
 
-from octoprint_CalibrationTools import (api, hooks, models)
+from octoprint_CalibrationTools import api, hooks, models
 
 defaultSettings = {
     "eSteps": {
@@ -15,6 +15,7 @@ defaultSettings = {
         "markLength": 120
     }
 }
+
 
 class CalibrationtoolsPlugin(
     octoprint.plugin.StartupPlugin,
@@ -32,7 +33,7 @@ class CalibrationtoolsPlugin(
         self.collectCommand = False
 
     def on_after_startup(self):
-        self._logger.debug("----------------[ CalibrationTools ]----------------")
+        self._logger.debug("---------------[ CalibrationTools ]---------------")
         self.data = self.getModel()
         self.collectCommand = True
         self._printer.commands("M92")

@@ -69,8 +69,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
         if command == CMD_SAVE_E_STEPS:
             cmds = ["M92 E%(newESteps)s" % data, "M500"]
-            if self.
-                cmds = cmds + ["M104 S0"]
+            cmds = cmds + ["M104 S0"]
             self._printer.commands()
 
             return

@@ -1,0 +1,36 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Odoo: Attach",
+            "type": "python",
+            "request": "attach",
+            "port": 5678,
+            "debugServer": 5678,
+            "host": "localhost",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/octoprint/octoprint/plugins/OctoPrint-CalibrationTools",
+                }
+            ],
+            "cwd": "${workspaceFolder}/src",
+            "logToFile": true
+        },
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/octoprint/octoprint/plugins/OctoPrint-CalibrationTools",
+                }
+            ],
+        },
+    ]
+}
