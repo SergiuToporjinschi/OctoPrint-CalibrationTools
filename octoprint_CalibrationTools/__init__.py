@@ -7,15 +7,14 @@ from octoprint_CalibrationTools import api, hooks, models
 
 defaultSettings = {
     "eSteps": {
-        "userControlsTemp": True,
-        "turnOffHeater": True,
+        "userControlsTemp": "checked",
+        "turnOffHotend": "",
         "extrudeTemp": 210,
         "extrudeLength": 100,
         "extrudeSpeed": 50,
         "markLength": 120
     }
 }
-
 
 class CalibrationtoolsPlugin(
     octoprint.plugin.StartupPlugin,
@@ -28,6 +27,7 @@ class CalibrationtoolsPlugin(
 ):
     collectCommand = False
     data = {}
+
 
     def initialize(self):
         self.collectCommand = False
@@ -46,6 +46,7 @@ class CalibrationtoolsPlugin(
             "js": ["js/CalibrationTools.js"],
             "css": ["css/style.css"]
         }
+    # self._settings.valid_boolean_trues:
 
     def get_settings_defaults(self):
         return defaultSettings

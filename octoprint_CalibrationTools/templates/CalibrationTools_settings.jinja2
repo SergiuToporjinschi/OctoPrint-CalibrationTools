@@ -1,12 +1,14 @@
 {% import "macros.jinja2" as snipped %}
 {{ snipped.subSection("E-Steps default settings", true) }}
 <div class="row-fluid">
-    <div class="span6"><label class="checkbox pull-right" style="margin-top: 5px;" for="userControlsTemp">Let me to control temperature</label></div>
+    <div class="span6"><label for="userControlsTemp" class="checkbox pull-right" style="margin-top: 5px;">Let me to control temperature</label></div>
     <div class="span6"><input id="userControlsTemp" type="checkbox" data-bind="checked: settings.plugins.CalibrationTools.eSteps.userControlsTemp"></div>
 </div>
 <div class="row-fluid">
-    <div class="span6"><label class="checkbox pull-right" style="margin-top: 5px;" for="turnOffHeater">Cooldown extruder when saving to EEPROM</label></div>
-    <div class="span6"><input id="turnOffHeater" type="checkbox" data-bind="checked: settings.plugins.CalibrationTools.eSteps.turnOffHeater"></div>
+    <div class="span6"><label for="turnOffHotend" class="checkbox pull-right" style="margin-top: 5px;">Cooldown extruder when saving to EEPROM</label></div>
+    <div class="span6"><input id="turnOffHotend" type="checkbox" data-bind="checked: settings.plugins.CalibrationTools.eSteps.turnOffHotend,
+        disable: settings.plugins.CalibrationTools.eSteps.userControlsTemp">
+    </div>
 </div>
 
 {{ snipped.field("Extrusion temperature", "The temperature used to extrude in testing&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure",

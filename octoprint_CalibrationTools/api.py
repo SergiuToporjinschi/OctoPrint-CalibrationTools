@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from threading import Event
-import octoprint.plugin
-import flask
 import re
+from threading import Event
+
+import flask
+import octoprint.plugin
 
 CMD_TEST = "TEST"
 CMD_LOAD_STEPS = "loadSteps"
@@ -68,10 +69,10 @@ class API(octoprint.plugin.SimpleApiPlugin):
             return
 
         if command == CMD_SAVE_E_STEPS:
-            cmds = ["M92 E%(newESteps)s" % data, "M500"]
-            cmds = cmds + ["M104 S0"]
-            self._printer.commands()
-
+            eStepsSettings = self._settings.get(['eSteps'])
+            userControlsTemp = eStepsSettings.get("userControlsTemp")
+            turnOffHotend = eStepsSettings.get("turnOffHotend")
+            self._printer.commands(["M92 E%(newESteps)s" % data, "M500"] + ["M104 S0"] if turnOffHotend and not userControlsTemp else  [])
             return
 
         if command == CMD_TEST:
