@@ -13,7 +13,7 @@
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M104", "Marlin website") }}
             <span class="add-on" title="Command to preheat the tool before testing">M104&nbsp;&nbsp;&nbsp;S</span>
-            <input type="number" id="temperature" class="input-mini" step="1" min="0" max="280"
+            <input type="number" id="temperature" class="input-mini" step="1" min="180" max="280"
                 title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" data-bind="value: $root.testParam.extrudeTemp">
         </div>
     </div>

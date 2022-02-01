@@ -13,6 +13,12 @@ defaultSettings = {
         "extrudeLength": 100,
         "extrudeSpeed": 50,
         "markLength": 120
+    },
+    "pid": {
+        "fanSpeed": 255,
+        "noCycles": 5,
+        "hotEndIndex": 0,
+        "targetTemp": 200,
     }
 }
 
