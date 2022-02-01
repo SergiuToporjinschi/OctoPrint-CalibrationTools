@@ -89,7 +89,7 @@ $(function () {
         }
 
         self.onAllBound = self.onEventConnected = function () {
-            OctoPrint.simpleApiGet("CalibrationTools", "something").done(function (response) {
+            OctoPrint.simpleApiGet("CalibrationTools").done(function (response) {
                 console.log("CalibrationTools");
                 self.from_json(response);
             });

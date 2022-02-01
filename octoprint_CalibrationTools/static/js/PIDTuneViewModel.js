@@ -6,6 +6,13 @@ $(function () {
 
         self.bedCurrentTemp = ko.observable(0);
         self.bedCurrentTarget = ko.observable(0);
+        self.is_admin = ko.observable(false);
+        self.pid = {
+            fanSpeed: ko.observable(255),
+            noCycles: ko.observable(5),
+            hotEndIndex: ko.observable(0),
+            targetTemp: ko.observable(200)
+        };
 
         OctoPrint.printer.getBedState().done(function (bedState) {
             self.bedCurrentTemp(bedState.bed.actual);
@@ -13,10 +20,10 @@ $(function () {
         });
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
-            self.testParam.extrudeTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.fanSpeed());
-            self.testParam.extrudeLength(self.settingsViewModel.settings.plugins.CalibrationTools.pid.noCycles());
-            self.testParam.extrudeSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEndIndex());
-            self.testParam.markLength(self.settingsViewModel.settings.plugins.CalibrationTools.pid.targetTemp());
+            self.pid.fanSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.pid.fanSpeed());
+            self.pid.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.noCycles());
+            self.pid.hotEndIndex(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEndIndex());
+            self.pid.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.targetTemp());
             self.is_admin(self.loginStateViewModel.isAdmin());
         }
     }
