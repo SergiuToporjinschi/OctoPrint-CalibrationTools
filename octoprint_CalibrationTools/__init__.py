@@ -43,10 +43,9 @@ class CalibrationtoolsPlugin(
         # Define your plugin's asset files to automatically include in the
         # core UI here.
         return {
-            "js": ["js/CalibrationTools.js"],
+            "js": ["js/CalibrationTools.js","js/PIDTuneViewModel.js"],
             "css": ["css/style.css"]
         }
-    # self._settings.valid_boolean_trues:
 
     def get_settings_defaults(self):
         return defaultSettings

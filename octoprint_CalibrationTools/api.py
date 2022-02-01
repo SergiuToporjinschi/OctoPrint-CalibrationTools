@@ -7,15 +7,21 @@ from threading import Event
 import flask
 import octoprint.plugin
 
+# from octoprint_CalibrationTools import EStepsApi
+
 CMD_TEST = "TEST"
 CMD_LOAD_STEPS = "loadSteps"
 CMD_START_EXTRUSION = "startExtrusion"
 CMD_SAVE_E_STEPS = "saveESteps"
 
-
 class API(octoprint.plugin.SimpleApiPlugin):
+    def __init__(self) -> None:
+        super().__init__()
+        # self.espAPI = EStepsApi.API()
+
     @staticmethod
     def get_api_commands():
+        # x = EStepsApi.apiCommands()
         return {
             CMD_LOAD_STEPS: [],
             CMD_START_EXTRUSION: [],
@@ -33,6 +39,8 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
     def on_api_command(self, command, data):
         self._logger.debug("api command [%s] received payload [%s]", command, data)
+        self.espAPI.apiGateWay()
+
         if command == CMD_LOAD_STEPS:
             self._logger.debug("Load steps from EEPROM")
             if not self._printer.is_ready():

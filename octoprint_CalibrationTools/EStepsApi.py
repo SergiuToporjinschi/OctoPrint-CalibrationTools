@@ -1,11 +1,17 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import re
 from threading import Event
+
+import flask
 
 CMD_ESP_TEST = "TEST"
 CMD_ESP_LOAD_STEPS = "eSteps_load"
 CMD_ESP_START_EXTRUSION = "eSteps_startExtrusion"
 CMD_ESP_SAVE = "eSteps_save"
 
-class API(octoprint.plugin.SimpleApiPlugin):
+class API:
 
     @staticmethod
     def apiCommands():

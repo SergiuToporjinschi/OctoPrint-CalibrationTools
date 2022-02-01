@@ -41,13 +41,6 @@ $(function () {
             self.is_admin(self.loginStateViewModel.isAdmin());
         }
 
-        /**open settings*/
-        self.openCalibrationSettings = function () {
-            $('a#navbar_show_settings').click();
-            $('li#settings_plugin_CalibrationTools_link a').click();
-            $("#settings_plugin_CalibrationTools").click();
-        }
-
         self.from_json = function (response) {
             self.steps["X"](response.data.X);
             self.steps["Y"](response.data.Y);
@@ -83,10 +76,6 @@ $(function () {
             })
         }
 
-        self.tempRestart = function () {
-            OctoPrint.system.executeCommand("core", "restart");
-        }
-
         self.saveESteps = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "saveESteps", {
                 "newESteps": self.results.newSteps()
@@ -105,19 +94,6 @@ $(function () {
                 self.from_json(response);
             });
         }
-
-        self.test = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools", "TEST").done(function (response) {
-                console.log(response)
-            }).fail(function (response) {
-                new PNotify({
-                    title: "Test request",
-                    text: response.responseJSON.error.msg,
-                    type: "error"
-                });
-            })
-        }
-
     }
 
     // This is how our plugin registers itself with the application, by adding some configuration

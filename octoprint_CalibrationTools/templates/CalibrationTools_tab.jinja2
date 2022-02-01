@@ -1,5 +1,5 @@
 <div class="octo-tab-content">
-    <div class="row-fluid header">
+    <div class="row-fluid header" id="toolBar">
         <div class="span3 title">
             <p>Calibration</p>
         </div>
@@ -7,7 +7,7 @@
             <div class="row-fluid">
                 <div class="span6"></div>
                 <div class="span6">
-                    <button class="btn" data-bind="click: $root.tempRestart, visible: true">
+                    <button class="btn" data-bind="click: $root.restart, visible: true">
                         RESTART
                     </button>
                     <button class="btn btn-primary" data-bind="click: $root.test,  visible: true" title="BTN for testing">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="span1 icon">
-            <a data-bind="click: $root.openCalibrationSettings">
+            <a data-bind="click: $root.onSettingsClick">
                 <i class="fas fa-cog fa-lg" data-color="#ddd"></i>
             </a>
         </div>
@@ -45,3 +45,33 @@
         </div>
     </div>
 </div>
+
+{% block script%}
+<script type="text/javascript">
+    OCTOPRINT_VIEWMODELS.push({
+        construct: function () {
+            this.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
+
+            this.test = function () {
+                OctoPrint.simpleApiCommand("CalibrationTools", "TEST").done(function (response) {
+                    console.log(response)
+                }).fail(function (response) {
+                    new PNotify({
+                        title: "Test request",
+                        text: response.responseJSON.error.msg,
+                        type: "error"
+                    });
+                });
+            };
+
+            this.onSettingsClick = function () {
+                $('a#navbar_show_settings').click();
+                $('li#settings_plugin_CalibrationTools_link a').click();
+                $("#settings_plugin_CalibrationTools").click();
+            };
+        },
+        // dependencies: ["terminalViewModel"],
+        elements: [".toolBar"]
+    });
+</script>
+{% endblock %}
