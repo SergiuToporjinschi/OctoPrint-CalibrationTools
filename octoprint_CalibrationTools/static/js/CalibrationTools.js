@@ -49,13 +49,13 @@ $(function () {
         }
 
         self.loadESteps = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools", "loadSteps").done(function (response) {
+            OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_load").done(function (response) {
                 self.from_json(response);
             })
         }
 
         self.startExtrusion = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools", "startExtrusion", {
+            OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_startExtrusion", {
                 "extrudeTemp": self.testParam.extrudeTemp(),
                 "extrudeLength": self.testParam.extrudeLength(),
                 "extrudeSpeed": self.testParam.extrudeSpeed()
@@ -77,7 +77,7 @@ $(function () {
         }
 
         self.saveESteps = function () {
-            OctoPrint.simpleApiCommand("CalibrationTools", "saveESteps", {
+            OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_save", {
                 "newESteps": self.results.newSteps()
             }).done(function () {
                 new PNotify({
@@ -89,7 +89,8 @@ $(function () {
         }
 
         self.onAllBound = self.onEventConnected = function () {
-            OctoPrint.simpleApiGet("CalibrationTools").done(function (response) {
+            debugger;
+            OctoPrint.simpleApiGet("CalibrationTools", "something").done(function (response) {
                 console.log("CalibrationTools");
                 self.from_json(response);
             });

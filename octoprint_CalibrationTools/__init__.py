@@ -28,7 +28,6 @@ class CalibrationtoolsPlugin(
     collectCommand = False
     data = {}
 
-
     def initialize(self):
         self.collectCommand = False
 

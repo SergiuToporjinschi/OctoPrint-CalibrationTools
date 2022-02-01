@@ -5,25 +5,25 @@ import re
 from threading import Event
 
 import flask
+import octoprint.plugin
 
-CMD_ESP_TEST = "TEST"
-CMD_ESP_LOAD_STEPS = "eSteps_load"
-CMD_ESP_START_EXTRUSION = "eSteps_startExtrusion"
-CMD_ESP_SAVE = "eSteps_save"
+CMD_ESTEPS_LOAD_STEPS = "eSteps_load"
+CMD_ESTEPS_START_EXTRUSION = "eSteps_startExtrusion"
+CMD_ESTEPS_SAVE = "eSteps_save"
 
-class API:
+class API(octoprint.plugin.SimpleApiPlugin):
 
     @staticmethod
     def apiCommands():
         return {
-            CMD_ESP_SAVE: [],
-            CMD_ESP_LOAD_STEPS: [],
-            CMD_ESP_START_EXTRUSION: []
+            CMD_ESTEPS_SAVE: ['newESteps'],
+            CMD_ESTEPS_LOAD_STEPS: [],
+            CMD_ESTEPS_START_EXTRUSION: ['extrudeLength','extrudeSpeed','extrudeTemp']
         }
 
     def apiGateWay(self, command, data):
         self._logger.debug("api command [%s] received payload [%s]", command, data)
-        if command == CMD_ESP_LOAD_STEPS:
+        if command == CMD_ESTEPS_LOAD_STEPS:
             self._logger.debug("Load steps from EEPROM")
             if not self._printer.is_ready():
                 self._logger.warning("Printer not ready, operation canceled")
@@ -42,7 +42,8 @@ class API:
             return flask.jsonify({
                 "data": self.data["steps"]
             })
-        if command == CMD_ESP_START_EXTRUSION:
+
+        if command == CMD_ESTEPS_START_EXTRUSION:
             self._logger.debug("Heating the extruder [%s]", data)
             if not self._printer.is_ready():
                 self._logger.warning("Printer not ready, operation canceled")
@@ -57,12 +58,14 @@ class API:
             self._printer.commands("M104 S%(extrudeTemp)s" % data)
             return
 
-        if command == CMD_ESP_SAVE:
+        if command == CMD_ESTEPS_SAVE:
             eStepsSettings = self._settings.get(['eSteps'])
             userControlsTemp = eStepsSettings.get("userControlsTemp")
             turnOffHotend = eStepsSettings.get("turnOffHotend")
             self._printer.commands(["M92 E%(newESteps)s" % data, "M500"] + ["M104 S0"] if turnOffHotend and not userControlsTemp else  [])
             return
+
+
 ############## HANDLERS ##############
     @staticmethod
     def startExtrusion(self, temps, extrudeLength, extrudeSpeed, *args):
