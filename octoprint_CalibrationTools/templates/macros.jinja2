@@ -18,8 +18,10 @@
 </blockquote>
 {% endmacro %}
 
-{% macro field(label, title, type, binding, enable, unit, step) %}
+{% macro field(label, title, type, binding, enable, unit, step, min, max) %}
 {% set step = step|default('0.01') %}
+{% set min = min|default("") %}
+{% set max = max|default("") %}
 <div class="row-fluid">
     <div class="span6">
         <label for="{{ label }}" class="pull-right" style="margin-top: 5px;" title="{{ title }}">
@@ -28,7 +30,28 @@
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}" data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}" min="{{ min }}" max="{{ max }}" data-bind="value: {{ binding }}, enable: {{ enable }}">
+            <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro labelField(label, title, type, binding, enable, unit, step, min, max) %}
+{% set step = step|default('0.01') %}
+{% set min = min|default("") %}
+{% set max = max|default("") %}
+<div class="row-fluid">
+    <div class="span6">
+        <label for="{{ label }}" class="pull-right" style="margin-top: 5px;" title="{{ title }}">
+            {{ _(label) }}
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-append input-prepend">
+            <span class="add-on" title="{{ title }}">{{ _(label) }}</span>
+            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}" min="{{ min }}" max="{{ max }}" data-bind="value: {{ binding }}, enable: {{ enable }}">
             <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
         </div>
     </div>

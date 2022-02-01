@@ -80,7 +80,7 @@ $(function () {
                     type: "error",
                     hide: false
                 });
-             })
+            })
         }
 
         self.tempRestart = function () {
@@ -130,6 +130,6 @@ $(function () {
         // instantiation via the parameters argument
         dependencies: ["loginStateViewModel", "settingsViewModel", "controlViewModel", "terminalViewModel", "accessViewModel"],
         // Finally, this is the list of selectors for all elements we want this view model to be bound to.
-        elements: ["#tab_plugin_CalibrationTools"]
+        elements: ["#calibration_eSteps"]
     });
 });

@@ -12,12 +12,11 @@
     <div class="span6">
         <div class="input-prepend input-append">
             <span class="add-on" title="Command to preheat the tool before testing">M104&nbsp;&nbsp;&nbsp;S</span>
-            <input type="number" id="temperature" title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" class="input-mini" step="1"
-                data-bind="value: $root.testParam.extrudeTemp">
+            <input type="number" id="temperature" class="input-mini" step="1" min="0" max="280"
+                title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" data-bind="value: $root.testParam.extrudeTemp">
         </div>
     </div>
 </div>
-
 <!-- G1 E100 F50 command  -->
 <div class="row-fluid">
     <div class="span6">
@@ -28,22 +27,21 @@
     <div class="span6">
         <div class="input-prepend input-append">
             <span class="add-on" title="Command to extrude filament for testing">G1&nbsp;&nbsp;&nbsp;E</span>
-            <input type="number" id="extrusionLenSpeed" title="The length of filament to be extruded in testing (in millimeters)" class="input-mini" step="1"
-                data-bind="value: $root.testParam.extrudeLength">
+            <input type="number" id="extrusionLenSpeed" class="input-mini" step="1" min="50" title="The length of filament to be extruded in testing (in millimeters)" data-bind="value: $root.testParam.extrudeLength">
             <span class="add-on" title="Command to extrude filament for testing">&nbsp;&nbsp;&nbsp;F</span>
-            <input type="number" id="extrusionLenSpeed" title="The speed to extrude filament in testing&#013;Lowest possible (mm/s)" class="input-mini" step="1"
+            <input type="number" id="extrusionLenSpeed" class="input-mini" step="1" min="10" max="400" title="The speed to extrude filament in testing&#013;Lowest possible (mm/s)"
                 data-bind="value: $root.testParam.extrudeSpeed">
         </div>
     </div>
 </div>
 
-{{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion. ", "number", "$root.testParam.markLength", "true", "mm") }}
+{{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion. ", "number", "$root.testParam.markLength", "true", "mm", 0.01, 50) }}
 
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div class="span6"></div>
     <div class="span6">
         <button class="btn btn-success" data-bind="click: $root.startExtrusion, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
-        title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
+            title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
             Start extrusion
         </button>
@@ -60,11 +58,10 @@
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01"
-                data-bind="value: $root.steps.E, enable:false">
+            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E, enable:false">
             <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
             <button class="btn" data-bind="click: $root.loadESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
-            title="Loads current value of steps/mm from EEPROM by calling M92">
+                title="Loads current value of steps/mm from EEPROM by calling M92">
                 <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
             </button>
         </div>
@@ -93,7 +90,7 @@
     <div class="span6"></div>
     <div class="span6">
         <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
-        title="Saves the new calculated value of steps/mm on printer EEPROM">
+            title="Saves the new calculated value of steps/mm on printer EEPROM">
             <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
             Save the new value
         </button>
