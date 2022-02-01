@@ -70,3 +70,15 @@
     <a target="_blank" href="https://marlinfw.org/docs/gcode/{{command}}.html"><i class="fas fa-info-circle"></i></a>
 </span>
 {% endmacro %}
+
+
+{% macro m500Icon(title='Save settings in EEPROM', before=true ) %}
+{% set title = title|trim %}
+{% if before %}
+{{ linkToMarlin("M500", "Marlin website") }}
+{% endif %}
+<span class="add-on" title="{{ title }}">M500</span>
+{% if not before %}
+{{ linkToMarlin("M500", "Marlin website") }}
+{% endif %}
+{% endmacro %}

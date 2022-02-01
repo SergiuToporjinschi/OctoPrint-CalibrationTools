@@ -84,8 +84,7 @@
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M92", "Marlin website") }}
             <span class="add-on" title="Command to change number of steps/mm for E axe" data-bind="text: $root.results.newStepsDisplay"></span>
-            {{ snipped.linkToMarlin("M500", "Marlin website") }}
-            <span class="add-on" title="Command for saving steps in EEPROM">M500</span>
+            {{ snipped.m500Icon() }}
         </div>
     </div>
 </div>

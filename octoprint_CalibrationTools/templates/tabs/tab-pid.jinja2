@@ -34,6 +34,7 @@ Current bed temperature: <span data-bind="text: bedCurrentTemp"></span>&#176; Be
             <span class="add-on" title="">&nbsp;&nbsp;&nbsp;S</span>
             <input type="number" id="tunningPIDToolTemp" class="input-mini" step="1" min="100" max="280" title="Target temperature" data-bind="value: $root.pid.targetTemp">
             <span class="add-on" title="">&nbsp;&nbsp;&nbsp;U1</span>
+            {{ snipped.m500Icon() }}
         </div>
     </div>
 </div>
@@ -42,7 +43,7 @@ Current bed temperature: <span data-bind="text: bedCurrentTemp"></span>&#176; Be
     <div class="span5"></div>
     <div class="span7">
         <button class="btn btn-success" data-bind="click: $root.pidHotEndTune, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
-            title="This will trigger PID auto tuning (M106 Sx; M303 Ex Sx U1; M501)">
+            title="This will trigger PID auto tuning (M106 Sx; M303 Ex Sx U1; M500)">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
             Start PID tunning
         </button>
