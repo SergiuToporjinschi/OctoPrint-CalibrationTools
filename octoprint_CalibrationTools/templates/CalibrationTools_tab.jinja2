@@ -53,7 +53,7 @@
             this.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
 
             this.test = function () {
-                OctoPrint.simpleApiCommand("CalibrationTools", "TEST").done(function (response) {
+                OctoPrint.simpleApiCommand("CalibrationTools", "pid_save").done(function (response) {
                     console.log(response)
                 }).fail(function (response) {
                     new PNotify({
