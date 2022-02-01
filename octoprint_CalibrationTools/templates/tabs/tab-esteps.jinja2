@@ -11,6 +11,7 @@
     </div>
     <div class="span6">
         <div class="input-prepend input-append">
+            {{ snipped.linkToMarlin("M104", "Marlin website") }}
             <span class="add-on" title="Command to preheat the tool before testing">M104&nbsp;&nbsp;&nbsp;S</span>
             <input type="number" id="temperature" class="input-mini" step="1" min="0" max="280"
                 title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" data-bind="value: $root.testParam.extrudeTemp">
@@ -26,6 +27,7 @@
     </div>
     <div class="span6">
         <div class="input-prepend input-append">
+            {{ snipped.linkToMarlin("G000-G001", "Marlin website") }}
             <span class="add-on" title="Command to extrude filament for testing">G1&nbsp;&nbsp;&nbsp;E</span>
             <input type="number" id="extrusionLenSpeed" class="input-mini" step="1" min="50" title="The length of filament to be extruded in testing (in millimeters)" data-bind="value: $root.testParam.extrudeLength">
             <span class="add-on" title="Command to extrude filament for testing">&nbsp;&nbsp;&nbsp;F</span>
@@ -80,7 +82,9 @@
     </div>
     <div class="span6">
         <div class="input-prepend input-append">
+            {{ snipped.linkToMarlin("M92", "Marlin website") }}
             <span class="add-on" title="Command to change number of steps/mm for E axe" data-bind="text: $root.results.newStepsDisplay"></span>
+            {{ snipped.linkToMarlin("M500", "Marlin website") }}
             <span class="add-on" title="Command for saving steps in EEPROM">M500</span>
         </div>
     </div>

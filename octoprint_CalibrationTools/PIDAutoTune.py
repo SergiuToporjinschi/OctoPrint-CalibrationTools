@@ -13,7 +13,9 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
     @staticmethod
     def apiCommands():
-        return {CMD_PID_SAVE : []}
+        return {
+            CMD_PID_SAVE : ["fanSpeed", "noCycles" "hotEndIndex", "targetTemp"]
+            }
 
     def apiGateWay(self, command, data):
         self._logger.debug("DIPGateway")

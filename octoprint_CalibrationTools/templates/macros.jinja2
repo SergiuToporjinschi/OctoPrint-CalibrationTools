@@ -57,3 +57,10 @@
     </div>
 </div>
 {% endmacro %}
+
+{% macro linkToMarlin(command, title) %}
+
+<span class="add-on" title="{{ title }}">
+    <a target="_blank" href="https://marlinfw.org/docs/gcode/{{command}}.html"><i class="fas fa-info-circle"></i></a>
+</span>
+{% endmacro %}

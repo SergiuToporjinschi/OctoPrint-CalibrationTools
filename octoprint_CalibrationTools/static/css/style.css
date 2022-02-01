@@ -14,8 +14,9 @@
   border-radius: 4px;
 }
 
-#tab_plugin_CalibrationTools .tab-content, #tab_plugin_CalibrationTools .tab-content > .tab-pane {
-    border: none;
+#tab_plugin_CalibrationTools .tab-content,
+#tab_plugin_CalibrationTools .tab-content > .tab-pane {
+  border: none;
 }
 
 #tab_plugin_CalibrationTools ul.nav li:first-child > a {
@@ -40,16 +41,20 @@
   margin-bottom: 10px;
 }
 
-#tab_plugin_CalibrationTools .icon a, #tab_plugin_CalibrationTools .icon a i {
-    vertical-align: middle;
-    cursor: pointer;
+#tab_plugin_CalibrationTools .icon a,
+#tab_plugin_CalibrationTools .icon a i {
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 #tab_plugin_CalibrationTools input:disabled {
-    cursor: text;
+  cursor: text;
 }
 
-
+#tab_plugin_CalibrationTools input[type='number'].input-mini {
+  text-align: left;
+  max-width: 40px;
+}
 /*
 
 
