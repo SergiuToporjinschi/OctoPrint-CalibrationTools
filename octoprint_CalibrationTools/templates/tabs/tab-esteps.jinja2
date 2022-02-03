@@ -42,7 +42,7 @@
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div class="span6"></div>
     <div class="span6">
-        <button class="btn btn-success" data-bind="click: $root.startExtrusion, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        <button class="btn btn-success" data-bind="click: $root.startExtrusion, enable: $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
             Start extrusion
@@ -82,7 +82,7 @@
     </div>
     <div class="span6">
         <div class="input-prepend input-append">
-            {{ snipped.linkToMarlin("M92", "Marlin website") }}
+            {{ snipped.linkToMarlin("M092", "Marlin website") }}
             <span class="add-on" title="Command to change number of steps/mm for E axe" data-bind="text: $root.results.newStepsDisplay"></span>
             {{ snipped.m500Icon() }}
         </div>
@@ -92,7 +92,7 @@
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div class="span6"></div>
     <div class="span6">
-        <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="Saves the new calculated value of steps/mm on printer EEPROM">
             <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
             Save the new value

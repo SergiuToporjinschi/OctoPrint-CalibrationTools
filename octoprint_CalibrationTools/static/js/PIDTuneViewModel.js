@@ -3,10 +3,11 @@ $(function () {
         var self = this;
         self.loginStateViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
+        self.controlViewModel = parameters[2];
 
         self.bedCurrentTemp = ko.observable(0);
         self.bedCurrentTarget = ko.observable(0);
-        self.is_admin = ko.observable(false);
+        self.isAdmin = ko.observable(false);
         self.pid = {
             fanSpeed: ko.observable(255),
             noCycles: ko.observable(5),
@@ -24,7 +25,30 @@ $(function () {
             self.pid.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.noCycles());
             self.pid.hotEndIndex(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEndIndex());
             self.pid.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.targetTemp());
-            self.is_admin(self.loginStateViewModel.isAdmin());
+            self.isAdmin(self.loginStateViewModel.isAdmin());
+        }
+
+        self.startPidHotEnd = function () {
+            OctoPrint.simpleApiCommand("CalibrationTools", "pid_start", {
+                "fanSpeed": self.pid.fanSpeed(),
+                "noCycles": self.pid.noCycles(),
+                "hotEndIndex": self.pid.hotEndIndex(),
+                "targetTemp": self.pid.targetTemp()
+            }).done(function (response) {
+                new PNotify({
+                    title: "PID HotEnd tuning has started",
+                    text: "In progress",
+                    type: "info"
+                });
+                console.log(response);
+            }).fail(function (response) {
+                new PNotify({
+                    title: "Error on starting extrusion ",
+                    text: response.responseJSON.error,
+                    type: "error",
+                    hide: false
+                });
+            });
         }
     }
     OCTOPRINT_VIEWMODELS.push({

@@ -22,7 +22,6 @@ class API(octoprint.plugin.SimpleApiPlugin):
         }
 
     def apiGateWay(self, command, data):
-        self._logger.debug("api command [%s] received payload [%s]", command, data)
         if command == CMD_ESTEPS_LOAD_STEPS:
             self._logger.debug("Load steps from EEPROM")
             if not self._printer.is_ready():
@@ -38,11 +37,11 @@ class API(octoprint.plugin.SimpleApiPlugin):
             # Issue M92 command
             self._printer.commands("M92")
 
-            m92Event.wait()
+            m92Event.wait(5)
+
             return flask.jsonify({
                 "data": self.data["steps"]
             })
-
         if command == CMD_ESTEPS_START_EXTRUSION:
             self._logger.debug("Heating the extruder [%s]", data)
             if not self._printer.is_ready():
@@ -53,10 +52,8 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
             # Register event to be trigger when temp is achieved
             self.registerEventTemp("T0", int(data["extrudeTemp"]), self.startExtrusion, data["extrudeLength"], data["extrudeSpeed"])
-
             # Heating the tool
             self._printer.commands("M104 S%(extrudeTemp)s" % data)
-            return
 
         if command == CMD_ESTEPS_SAVE:
             eStepsSettings = self._settings.get(['eSteps'])

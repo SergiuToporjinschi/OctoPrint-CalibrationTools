@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function, unicode_literals
-from ast import arg
 
+import collections
 import re
 import threading
 import traceback
 import types
-import collections
 
 
 class Hooks():
@@ -15,20 +14,26 @@ class Hooks():
     gCodeWaiters = []
 
     def gCodeReceived(self, comm, line, *args, **kwargs):
-        if len(self.gCodeWaiters) <= 0 and not line.startswith('echo:'):
-            return line
-
-        reg = re.compile("echo:\s*(?P<gCode>M\d{1,4})")
-        mCommand = reg.match(line)
-        if mCommand:
-            gCode = mCommand.group("gCode")
+        try:
+            if len(self.gCodeWaiters) <= 0:
+                return line
             for waiter in self.gCodeWaiters:
-                if gCode.upper() == waiter["cmd"]:
-                    arg = (line, *waiter["args"])
+                reg = waiter["regex"]
+                waiter["callCount"] = waiter["callCount"] + 1
+                if reg.match(line):
+                    args = (line, *waiter["args"])
                     if isinstance(waiter["func"], types.FunctionType):
-                        arg = (self, *arg)
-                    threading.Thread(target=waiter["func"], args=arg).start()
-                    self.gCodeWaiters.remove(waiter)
+                        args = (self, *args)
+                    threading.Thread(target=waiter["func"], args=args).start()
+                    waiter["dead"] = True
+                    break
+                if waiter["callCount"] >= 3:
+                    self._logger.warning("Hanging thread: Removing waiter regex: %(regex)s" % waiter)
+                    waiter["dead"] = True
+            self.gCodeWaiters = [w for w in self.gCodeWaiters if "dead" not in w or not w["dead"]]
+        except Exception as e:
+            self._logger.error(traceback.format_exc())
+            self.gCodeWaiters = []
         return line
 
     def firmwareInfo(self, comm_instance, firmware_name, firmware_data, *args, **kwargs):
@@ -79,11 +84,20 @@ class Hooks():
 
     # Registering a gCodeWaiter
     def registerGCodeWaiter(self, command, func, *arguments):
-        if command is None or not re.compile("(?P<gCode>M\d{1,4})").match(command.upper()) or func is None or not isinstance(func, collections.Callable):
-            self._logger.warn("registerGCodeAnswer: Attempt to register gCodeAnswer without a function or gCode command")
+        reg = re.compile(".*\s*(?P<gCode>[M,G]\d{1,4})")
+        if command is None or not reg.match(command.upper()):
+            self._logger.warn("registerGCodeAnswer: Attempt to register gCodeAnswer without a function or valid gCode command")
             return
+        self.registerRegexMsg(".*\s*(?P<gCode>[M,G]\d{1,4})", func, *arguments)
+
+    def registerRegexMsg(self, regex, func, *arguments):
+        if regex is None or func is None or not isinstance(func, collections.Callable):
+            self._logger.warn("registerRegexMsg: Attempt to register gCodeAnswer without a function or regex")
+            return
+
         self.gCodeWaiters.append({
-            "cmd": command.upper(),
+            "regex": re.compile(regex),
             "func": func,
-            "args": arguments
+            "args": arguments,
+            "callCount": 0
         })
