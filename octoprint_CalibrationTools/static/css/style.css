@@ -55,6 +55,12 @@
   text-align: left;
   max-width: 40px;
 }
+
+#tab_plugin_CalibrationTools span.numberDisplay {
+  min-width: 50px;
+  text-align: left;
+}
+
 /*
 
 

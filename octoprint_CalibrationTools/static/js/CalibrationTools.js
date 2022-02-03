@@ -57,7 +57,7 @@ $(function () {
                 self.loadEStepsActive(true);
             })
         }
-        self.startExtrusionActive = ko.observable(true)
+        self.startExtrusionActive = ko.observable(false)
         self.startExtrusion = function () {
             self.startExtrusionActive(true);
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_startExtrusion", {
@@ -79,7 +79,7 @@ $(function () {
                     hide: false
                 });
             }).always(function (response) {
-                self.startExtrusionActive(true);
+                self.startExtrusionActive(false);
             });
         }
 

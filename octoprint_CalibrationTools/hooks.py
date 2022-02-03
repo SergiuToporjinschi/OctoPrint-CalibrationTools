@@ -21,7 +21,7 @@ class Hooks():
                 reg = waiter["regex"]
                 waiter["callCount"] = waiter["callCount"] + 1
                 if reg.match(line):
-                    args = (line, *waiter["args"])
+                    args = (line, reg, *waiter["args"])
                     if isinstance(waiter["func"], types.FunctionType):
                         args = (self, *args)
                     threading.Thread(target=waiter["func"], args=args).start()

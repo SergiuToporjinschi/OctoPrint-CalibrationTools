@@ -5,8 +5,19 @@ $(function () {
         self.settingsViewModel = parameters[1];
         self.controlViewModel = parameters[2];
 
-        self.bedCurrentTemp = ko.observable(0);
-        self.bedCurrentTarget = ko.observable(0);
+        self.pidCurrentValues = {
+            "hotEnd": {
+                "P": ko.observable(0),
+                "I": ko.observable(0),
+                "D": ko.observable(0)
+            },
+            "bed": {
+                "P": ko.observable(0),
+                "I": ko.observable(0),
+                "D": ko.observable(0)
+            }
+        };
+
         self.isAdmin = ko.observable(false);
         self.pid = {
             fanSpeed: ko.observable(255),
@@ -15,10 +26,26 @@ $(function () {
             targetTemp: ko.observable(200)
         };
 
-        OctoPrint.printer.getBedState().done(function (bedState) {
-            self.bedCurrentTemp(bedState.bed.actual);
-            self.bedCurrentTarget(bedState.bed.target);
-        });
+        /**
+         * Get current PIDs settings for bed and hotEnd
+         */
+        self.getCurrentValues = function () {
+            OctoPrint.simpleApiCommand("CalibrationTools", "pid_getCurrentValues").done(function (response) {
+                self.pidCurrentValues.hotEnd.P(response.data.hotEnd.P);
+                self.pidCurrentValues.hotEnd.I(response.data.hotEnd.I);
+                self.pidCurrentValues.hotEnd.D(response.data.hotEnd.D);
+                self.pidCurrentValues.bed.P(response.data.bed.P);
+                self.pidCurrentValues.bed.I(response.data.bed.I);
+                self.pidCurrentValues.bed.D(response.data.bed.D);
+            }).fail(function (response) {
+                new PNotify({
+                    title: "Error on getting current PID values ",
+                    text: response.responseJSON.error,
+                    type: "error",
+                    hide: false
+                });
+            });
+        };
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
             self.pid.fanSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.pid.fanSpeed());
@@ -43,7 +70,7 @@ $(function () {
                 console.log(response);
             }).fail(function (response) {
                 new PNotify({
-                    title: "Error on starting extrusion ",
+                    title: "Error on starting PID autotune ",
                     text: response.responseJSON.error,
                     type: "error",
                     hide: false

@@ -1,12 +1,47 @@
 {% import "macros.jinja2" as snipped %}
 
-Current bed temperature: <span data-bind="text: bedCurrentTemp"></span>&#176; Bed target temperature <span data-bind="text: $root.bedCurrentTarget"></span>&#176;
-{{ snipped.subSection("Tool tuning", true) }}
-
+{{ snipped.subSection("Hot-end tuning", true) }}
+<div class="row-fluid">
+    <div class="span5">
+        <label for="hotEndPid" class="pull-right" style="margin-top: 5px;" title="Current hot-end PID">
+            Current hot-end PID
+        </label>
+    </div>
+    <div class="span7">
+        <div class="input-prepend input-append" id="hotEndPid">
+            <span class="add-on" title="Proportional gain">P</span>
+            <span class="add-on numberDisplay" title="Proportional gain" data-bind="text: $root.pidCurrentValues.hotEnd.P()"></span>
+            <span class="add-on" title="Integral gain">I</span>
+            <span class="add-on numberDisplay" title="Integral gain" data-bind="text: $root.pidCurrentValues.hotEnd.I()"></span>
+            <span class="add-on" title="Derivative">D</span>
+            <span class="add-on numberDisplay" title="Derivative" data-bind="text: $root.pidCurrentValues.hotEnd.D()"></span>
+            <button class="btn" data-bind="click: $root.getCurrentValues, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())" title="Load current PIDs">
+                <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+        <label for="bedPid" class="pull-right" style="margin-top: 5px;" title="Current bed PID">
+            Current bed PID
+        </label>
+    </div>
+    <div class="span7">
+        <div class="input-prepend input-append" id="bedPid">
+            <span class="add-on" title="Proportional gain">P</span>
+            <span class="add-on numberDisplay" title="Proportional gain" data-bind="text: $root.pidCurrentValues.bed.P()"></span>
+            <span class="add-on" title="Integral gain">I</span>
+            <span class="add-on numberDisplay" title="Integral gain" data-bind="text: $root.pidCurrentValues.bed.I()"></span>
+            <span class="add-on" title="Derivative">D</span>
+            <span class="add-on numberDisplay" title="Derivative" data-bind="text: $root.pidCurrentValues.bed.D()"></span>
+        </div>
+    </div>
+</div>
 
 <div class="row-fluid">
     <div class="span5">
-        <label for="fanSpeed" class="pull-right" style="margin-top: 5px;" title="x">
+        <label for="fanSpeed" class="pull-right" style="margin-top: 5px;" title="Fan speed">
             Turn fan to max
         </label>
     </div>
@@ -49,9 +84,6 @@ Current bed temperature: <span data-bind="text: bedCurrentTemp"></span>&#176; Be
         </button>
     </div>
 </div>
-
-Save M501
-
 
 {{ snipped.subSection("Heated bed tuning", true) }}
 

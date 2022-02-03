@@ -43,7 +43,7 @@
     <div class="span6"></div>
     <div class="span6">
         <button class="btn btn-success"
-            data-bind="click: $root.startExtrusion, enable: $root.startExtrusionActive() && $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            data-bind="click: $root.startExtrusion, enable: !$root.startExtrusionActive() && $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
             Start extrusion
@@ -65,7 +65,7 @@
             <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
             <button class="btn" data-bind="click: $root.loadESteps, enable: $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
                 title="Loads current value of steps/mm from EEPROM by calling M92">
-                <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
+                <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>
             </button>
         </div>
     </div>
