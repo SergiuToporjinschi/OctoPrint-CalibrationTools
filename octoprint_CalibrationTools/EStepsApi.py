@@ -52,13 +52,14 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
             # Register event to be trigger when temp is achieved
             self.registerEventTemp("T0", int(data["extrudeTemp"]), self.startExtrusion, data["extrudeLength"], data["extrudeSpeed"])
-            # Heating the tool
+            # Heating HotEnd
             self._printer.commands("M104 S%(extrudeTemp)s" % data)
 
         if command == CMD_ESTEPS_SAVE:
             eStepsSettings = self._settings.get(['eSteps'])
             userControlsTemp = eStepsSettings.get("userControlsTemp")
             turnOffHotend = eStepsSettings.get("turnOffHotend")
+            #save data to EEPROM and cool-down
             self._printer.commands(["M92 E%(newESteps)s" % data, "M500"] + ["M104 S0"] if turnOffHotend and not userControlsTemp else  [])
             return
 

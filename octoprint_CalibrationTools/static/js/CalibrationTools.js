@@ -48,13 +48,18 @@ $(function () {
             self.steps["E"](response.data.E);
         }
 
+        self.loadEStepsActive = ko.observable(true)
         self.loadESteps = function () {
+            self.loadEStepsActive(false);
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_load").done(function (response) {
                 self.from_json(response);
+            }).always(function (response) {
+                self.loadEStepsActive(true);
             })
         }
-
+        self.startExtrusionActive = ko.observable(true)
         self.startExtrusion = function () {
+            self.startExtrusionActive(true);
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_startExtrusion", {
                 "extrudeTemp": self.testParam.extrudeTemp(),
                 "extrudeLength": self.testParam.extrudeLength(),
@@ -73,7 +78,9 @@ $(function () {
                     type: "error",
                     hide: false
                 });
-            })
+            }).always(function (response) {
+                self.startExtrusionActive(true);
+            });
         }
 
         self.saveESteps = function () {

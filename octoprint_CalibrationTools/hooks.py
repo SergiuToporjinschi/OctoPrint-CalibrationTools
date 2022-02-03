@@ -27,9 +27,9 @@ class Hooks():
                     threading.Thread(target=waiter["func"], args=args).start()
                     waiter["dead"] = True
                     break
-                if waiter["callCount"] >= 3:
-                    self._logger.warning("Hanging thread: Removing waiter regex: %(regex)s" % waiter)
-                    waiter["dead"] = True
+                # if waiter["callCount"] >= 3:
+                #     self._logger.warning("Hanging thread: Removing waiter regex: %(regex)s" % waiter)
+                #     waiter["dead"] = True
             self.gCodeWaiters = [w for w in self.gCodeWaiters if "dead" not in w or not w["dead"]]
         except Exception as e:
             self._logger.error(traceback.format_exc())
@@ -53,7 +53,7 @@ class Hooks():
             self._logger.error(traceback.format_exc())
         return parsed_temperatures
 
-    # Check if the current message contains changes concerning registered tool
+    # Check if the current message contains changes concerning registered extruder
     # if the criteria is meat then the execution function is called
     def checkAndTriggerEvent(self, temps):
         for tool, values in temps.items():
