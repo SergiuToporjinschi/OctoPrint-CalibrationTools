@@ -61,7 +61,7 @@
     </div>
     <div class="span6">
         <div class="input-append">
-            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E, enable:false">
+            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E(), enable:false">
             <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
             <button class="btn" data-bind="click: $root.loadESteps, enable: $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
                 title="Loads current value of steps/mm from EEPROM by calling M92">

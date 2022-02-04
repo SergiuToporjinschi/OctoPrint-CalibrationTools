@@ -20,10 +20,18 @@ $(function () {
 
         self.isAdmin = ko.observable(false);
         self.pid = {
-            fanSpeed: ko.observable(255),
-            noCycles: ko.observable(5),
-            hotEndIndex: ko.observable(0),
-            targetTemp: ko.observable(200)
+            "hotEnd": {
+                fanSpeed: ko.observable(255),
+                noCycles: ko.observable(8),
+                hotEndIndex: ko.observable(0),
+                targetTemp: ko.observable(200)
+            },
+            "bed": {
+                fanSpeed: ko.observable(255),
+                noCycles: ko.observable(8),
+                index: ko.observable(-1),
+                targetTemp: ko.observable(200)
+            }
         };
 
         /**
@@ -48,19 +56,45 @@ $(function () {
         };
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
-            self.pid.fanSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.pid.fanSpeed());
-            self.pid.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.noCycles());
-            self.pid.hotEndIndex(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEndIndex());
-            self.pid.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.targetTemp());
+            self.pid.hotEnd.fanSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEnd.fanSpeed());
+            self.pid.hotEnd.hotEndIndex(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEnd.hotEndIndex());
+            self.pid.hotEnd.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEnd.noCycles());
+            self.pid.hotEnd.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.hotEnd.targetTemp());
+            self.pid.bed.index(-1);
+            self.pid.bed.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.bed.noCycles());
+            self.pid.bed.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.bed.targetTemp());
             self.isAdmin(self.loginStateViewModel.isAdmin());
         }
 
         self.startPidHotEnd = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "pid_start", {
-                "fanSpeed": self.pid.fanSpeed(),
-                "noCycles": self.pid.noCycles(),
-                "hotEndIndex": self.pid.hotEndIndex(),
-                "targetTemp": self.pid.targetTemp()
+                "fanSpeed": Number(self.pid.hotEnd.fanSpeed()),
+                "noCycles": Number(self.pid.hotEnd.noCycles()),
+                "hotEndIndex": Number(self.pid.hotEnd.hotEndIndex()),
+                "targetTemp": Number(self.pid.hotEnd.targetTemp())
+            }).done(function (response) {
+                new PNotify({
+                    title: "PID HotEnd tuning has started",
+                    text: "In progress",
+                    type: "info"
+                });
+                console.log(response);
+            }).fail(function (response) {
+                new PNotify({
+                    title: "Error on starting PID autotune ",
+                    text: response.responseJSON.error,
+                    type: "error",
+                    hide: false
+                });
+            });
+        }
+        self.startPidBed = function () {
+            OctoPrint.simpleApiCommand("CalibrationTools", "pid_start", {
+                "heater": "bed",
+                "fanSpeed": self.pid.bed.fanSpeed(),
+                "noCycles": self.pid.bed.noCycles(),
+                "hotEndIndex": self.pid.bed.hotEndIndex(),
+                "targetTemp": self.pid.bed.targetTemp()
             }).done(function (response) {
                 new PNotify({
                     title: "PID HotEnd tuning has started",

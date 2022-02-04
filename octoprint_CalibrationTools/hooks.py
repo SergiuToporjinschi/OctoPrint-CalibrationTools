@@ -88,7 +88,7 @@ class Hooks():
         if command is None or not reg.match(command.upper()):
             self._logger.warn("registerGCodeAnswer: Attempt to register gCodeAnswer without a function or valid gCode command")
             return
-        self.registerRegexMsg(".*\s*(?P<gCode>[M,G]\d{1,4})", func, *arguments)
+        self.registerRegexMsg(reg, func, *arguments)
 
     def registerRegexMsg(self, regex, func, *arguments):
         if regex is None or func is None or not isinstance(func, collections.Callable):
@@ -96,7 +96,7 @@ class Hooks():
             return
 
         self.gCodeWaiters.append({
-            "regex": re.compile(regex),
+            "regex": regex,
             "func": func,
             "args": arguments,
             "callCount": 0

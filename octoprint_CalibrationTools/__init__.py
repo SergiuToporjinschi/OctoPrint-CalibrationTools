@@ -15,10 +15,17 @@ defaultSettings = {
         "markLength": 120
     },
     "pid": {
-        "fanSpeed": 255,
-        "noCycles": 5,
-        "hotEndIndex": 0,
-        "targetTemp": 200,
+        "hotEnd":{
+            "fanSpeed": 255,
+            "noCycles": 8,
+            "hotEndIndex": 0,
+            "targetTemp": 200,
+        },"bed":{
+            "fanSpeed": 255,
+            "noCycles": 8,
+            "hotEndIndex": -1,
+            "targetTemp": 70,
+        }
     }
 }
 

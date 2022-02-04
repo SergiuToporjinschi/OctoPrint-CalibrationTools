@@ -48,7 +48,7 @@ $(function () {
             self.steps["E"](response.data.E);
         }
 
-        self.loadEStepsActive = ko.observable(true)
+        self.loadEStepsActive = ko.observable(true);
         self.loadESteps = function () {
             self.loadEStepsActive(false);
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_load").done(function (response) {
