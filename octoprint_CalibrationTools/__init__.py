@@ -55,7 +55,7 @@ class CalibrationtoolsPlugin(
         # Define your plugin's asset files to automatically include in the
         # core UI here.
         return {
-            "js": ["js/CalibrationTools.js","js/PIDTuneViewModel.js"],
+            "js": ["js/ESteps.js","js/PIDTuneViewModel.js"],
             "css": ["css/style.css"]
         }
 
