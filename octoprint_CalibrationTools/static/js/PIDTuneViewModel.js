@@ -68,6 +68,7 @@ $(function () {
 
         self.startPidHotEnd = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "pid_start", {
+                "heater": "hotEnd",
                 "fanSpeed": Number(self.pid.hotEnd.fanSpeed()),
                 "noCycles": Number(self.pid.hotEnd.noCycles()),
                 "hotEndIndex": Number(self.pid.hotEnd.hotEndIndex()),
@@ -93,7 +94,7 @@ $(function () {
                 "heater": "bed",
                 "fanSpeed": self.pid.bed.fanSpeed(),
                 "noCycles": self.pid.bed.noCycles(),
-                "hotEndIndex": self.pid.bed.hotEndIndex(),
+                "hotEndIndex": -1,
                 "targetTemp": self.pid.bed.targetTemp()
             }).done(function (response) {
                 new PNotify({

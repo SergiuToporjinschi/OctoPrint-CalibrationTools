@@ -24,6 +24,10 @@ allPIDsFormats = r".*p:{0,1}\s{0,1}?(?P<p>\d{1,3}.\d{1,3})\sk*i:{0,1}\s{0,1}?(?P
 class API(octoprint.plugin.SimpleApiPlugin):
     pidHotEndCycles = []
     pidCurrentValues = {}
+    pidHotEndCycles = {
+        "hotEnd": [],
+        "bed":[]
+    }
     #catch for "echo: p:28.27 i:2.82 d:70.81"  or   "M301 P27.08 I2.51 D73.09"
     getPid = re.compile(allPIDsFormats, flags=re.IGNORECASE)
     @staticmethod
@@ -32,7 +36,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
             CMD_PID_LOAD_CURRENT_VALUES: [],
             CMD_PID_SAVE : [],
             CMD_PID_GET_VALUES: [],
-            CMD_PID_START: ["fanSpeed", "noCycles", "hotEndIndex", "targetTemp"]
+            CMD_PID_START: ["heater", "fanSpeed", "noCycles", "hotEndIndex", "targetTemp"]
             }
 
     def apiGateWay(self, command, data):
@@ -52,16 +56,16 @@ class API(octoprint.plugin.SimpleApiPlugin):
             })
 
         if command == CMD_PID_START:
-            self.pidHotEndCycles = {
-                "hotEnd": [],
-                "bed":[]
-            }
+            self.pidHotEndCycles[data["heater"]] = []
             #Two cycles are for tuning
             for i in range(0, data['noCycles'] - 2):
                 #response type !!DEBUG:send Kp: 30.56 Ki: 3.03 Kd: 77.16
                 self.registerRegexMsg(self.getPid, self.m106CodeResponse, data["heater"])
 
-            self._printer.commands(["M106 S%(fanSpeed)s" % data, "M303 C%(noCycles)s E%(hotEndIndex)s S%(targetTemp)s U1" % data])
+            if data["heater"] == "bed":
+                data["hotEndIndex"] = -1
+
+            self._printer.commands(["M106 S%(fanSpeed)s" % data, "M303 C%(noCycles)s E%(hotEndIndex)s S%(targetTemp)s U1" % data, "M500"])
 
         if command == CMD_PID_SAVE:
             self._logger.debug("DIPSave-")
