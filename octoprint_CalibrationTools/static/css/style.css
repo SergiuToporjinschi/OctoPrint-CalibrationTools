@@ -14,7 +14,20 @@
   border-radius: 4px;
 }
 
-#tab_plugin_CalibrationTools .tab-content,
+/* #tab_plugin_CalibrationTools .input-prepend,
+#tab_plugin_CalibrationTools .input-append {
+  overflow: hidden;
+} */
+
+#tab_plugin_CalibrationTools .nav {
+  word-break: break-all;
+}
+
+#tab_plugin_CalibrationTools .tab-content {
+  overflow-x: auto;
+  border: none;
+}
+
 #tab_plugin_CalibrationTools .tab-content > .tab-pane {
   border: none;
 }
