@@ -37,7 +37,7 @@ ok
 
 ## regex for all pid formats
 
-`r".*p:{0,1}\s{0,1}?(?P<p>\d{1,3}.\d{1,3})\sk*i:{0,1}\s{0,1}?(?P<i>\d{1,3}.\d{1,3})\sk*d:{0,1}\s{0,1}?(?P<d>\d{1,3}.\d{1,3})"`
+    r".*p:{0,1}\s{0,1}?(?P<p>\d{1,3}.\d{1,3})\sk*i:{0,1}\s{0,1}?(?P<i>\d{1,3}.\d{1,3})\sk*d:{0,1}\s{0,1}?(?P<d>\d{1,3}.\d{1,3})"
 
 # Util Octoprint functions
 
@@ -106,7 +106,7 @@ showSelectionDialog({"title": "tt", "message": "text", "selections":["ss","fdgd"
 
 showMessageDialog("sss", {options})
 
-#### modal dialog with buttons
+#### Modal dialog with buttons
 
 showConfirmationDialog({
 "message": "something",
