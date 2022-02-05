@@ -14,7 +14,9 @@
 {% macro quote(content, cite, class) %}
 <blockquote>
     <p class="{{ class }}">{{ _(content) }}</p>
+    {% if cite %}
     <small>{{ cite }}</small>
+    {%endif %}
 </blockquote>
 {% endmacro %}
 
