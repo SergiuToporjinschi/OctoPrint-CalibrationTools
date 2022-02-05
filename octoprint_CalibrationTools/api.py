@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import traceback
-from ast import Try
 
 import flask
 
@@ -27,13 +26,18 @@ class API(EStepsApi.API, PIDAutoTune.API):
         return result
 
     def on_api_get(self, request):
-        # request.args.get('x')
-        self._logger.debug("api.on_api_get")
-        return flask.jsonify(
-            {
-                "data": self.data["steps"]
-            }
-        )
+        try:
+            self._logger.debug("api.on_api_get")
+            return flask.jsonify(
+                {
+                    "data": self.data["steps"]
+                }
+            )
+        except Exception as e:
+            self._logger.error(traceback.format_exc())
+            return flask.abort(500, {
+                "msg": "An error curred"
+            })
 
     def on_api_command(self, command, data):
         try:

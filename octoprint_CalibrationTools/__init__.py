@@ -16,9 +16,9 @@ defaultSettings = {
     },
     "XYZSteps": {
         "gCodeCubeSize": {
-            "X":20,
-            "Y":20,
-            "Z":20
+            "X":20.000,
+            "Y":20.000,
+            "Z":20.000
         }
     },
     "pid": {

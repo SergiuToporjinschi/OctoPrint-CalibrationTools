@@ -1,22 +1,22 @@
 <div class="octo-tab-content">
     <div class="row-fluid header" id="toolBar">
-        <div class="span3 title">
+        <div class="span11 title">
             <p>Calibration</p>
         </div>
-        <div class="span8 title">
+        <!-- <div class="span8 title">
             <div class="row-fluid">
                 <div class="span6"></div>
                 <div class="span6">
-                    <button class="btn" data-bind="click: $root.restart, visible: true">
+                    <button class="btn" data-bind="click: $root.restart, visible: false">
                         RESTART
                     </button>
-                    <button class="btn btn-primary" data-bind="click: $root.test,  visible: true" title="BTN for testing">
+                    <button class="btn btn-primary" data-bind="click: $root.test,  visible: false" title="BTN for testing">
                         <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
                         TEST
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="span1 icon">
             <a data-bind="click: $root.onSettingsClick">
                 <i class="fas fa-cog fa-lg" data-color="#ddd"></i>
@@ -26,14 +26,14 @@
     <div class="main row-fluid">
         <div class="span3">
             <ul class="nav nav-list">
-                <li>
+                <li class="active">
                     <a data-toggle="tab" href="#calibration_documentation">Documentation</a>
                 </li>
                 <li>
                     <a data-toggle="tab" href="#calibration_eSteps">E-Steps</a>
                 </li>
-                <li class="active">
-                    <a data-toggle="tab" href="#calibration_x-y-z">X-Y-Z-Steps</a>
+                <li>
+                    <a data-toggle="tab" href="#calibration_x-y-z">X-Y-Z Steps</a>
                 </li>
                 <li>
                     <a data-toggle="tab" href="#calibration_pid">PID Autotune</a>

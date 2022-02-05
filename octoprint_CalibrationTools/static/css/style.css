@@ -69,6 +69,11 @@
   text-align: left;
 }
 
+#tab_plugin_CalibrationTools input.numberDisplay {
+  text-align: left;
+  max-width: 65px;
+}
+
 /*
 
 

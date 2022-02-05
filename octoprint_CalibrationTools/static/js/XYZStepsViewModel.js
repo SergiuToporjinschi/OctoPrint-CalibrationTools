@@ -59,7 +59,11 @@ $(function () {
                 "newYSteps": self.eStepsXYZ.newSteps.Y(),
                 "newZSteps": self.eStepsXYZ.newSteps.Z()
             }).done(function (response) {
-
+                new PNotify({
+                    title: "Saved",
+                    text: "X: " + self.eStepsXYZ.newSteps.X() + "steps/mm<br>Y: " + self.eStepsXYZ.newSteps.Y() + "steps/mm<br>Z: " + self.eStepsXYZ.newSteps.Z() + " steps/mm<br> had been set for X/Y/Z axes",
+                    type: "info"
+                });
             }).always(function (response) {
                 self.saveEStepsXYZActive(true);
             })
