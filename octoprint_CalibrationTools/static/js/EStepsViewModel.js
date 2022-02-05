@@ -1,7 +1,6 @@
 $(function () {
-    function CalibrationToolsViewModel(parameters) {
+    function CalibrationToolsEStepsModelView(parameters) {
         var self = this;
-        console.log(gettext("test"));
         self.loginStateViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
         self.controlViewModel = parameters[2];
@@ -97,7 +96,6 @@ $(function () {
 
         self.onAllBound = self.onEventConnected = function () {
             OctoPrint.simpleApiGet("CalibrationTools").done(function (response) {
-                console.log("CalibrationTools");
                 self.from_json(response);
             });
         }
@@ -107,7 +105,7 @@ $(function () {
     // information to the global variable OCTOPRINT_VIEWMODELS
     OCTOPRINT_VIEWMODELS.push({
         // This is the constructor to call for instantiating the plugin
-        construct: CalibrationToolsViewModel,
+        construct: CalibrationToolsEStepsModelView,
         // This is a list of dependencies to inject into the plugin, the order which you request
         // here is the order in which the dependencies will be injected into your view model upon
         // instantiation via the parameters argument

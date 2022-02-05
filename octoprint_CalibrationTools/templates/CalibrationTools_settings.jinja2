@@ -1,5 +1,5 @@
 {% import "macros.jinja2" as snipped %}
-{{ snipped.subSection("E-Steps default settings", true) }}
+{{ snipped.subSection("E-Steps default values",true) }}
 <div class="row-fluid">
     <div class="span6"><label for="userControlsTemp" class="checkbox pull-right" style="margin-top: 5px;">Let me to control temperature</label></div>
     <div class="span6"><input id="userControlsTemp" type="checkbox" data-bind="checked: settings.plugins.CalibrationTools.eSteps.userControlsTemp"></div>
@@ -23,14 +23,18 @@
 {{ snipped.field("Filament mark length", "The length marked on filament",
 "number", "settings.plugins.CalibrationTools.eSteps.markLength", "true", "mm", 50) }}
 
-{{ snipped.subSection("X-Y-Z-Steps", true) }}
+{{ snipped.subSection("X-Y-Z-Steps default values") }}
+{{ snipped.field("gCode cube size of X", "", "number", "settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.X", "true", "mm", 0.01, 10.00, "") }}
+{{ snipped.field("gCode cube size of Y", "", "number", "settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Y", "true", "mm", 0.01, 10.00, "") }}
+{{ snipped.field("gCode cube size of Z", "", "number", "settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Z", "true", "mm", 0.01, 10.00, "") }}
 
-{{ snipped.subSection("Hot-end PID", true) }}
+
+{{ snipped.subSection("Hot-end PID default values") }}
 {{ snipped.field("Fan speed", "Default value for fan speed while tuning", "number", "settings.plugins.CalibrationTools.pid.hotEnd.fanSpeed", "true", "", 1, 0, 255) }}
 {{ snipped.field("Number of cycles", "Default number of cycles to sample while tuning", "number", "settings.plugins.CalibrationTools.pid.hotEnd.noCycles", "true", "", 1, 3, 200) }}
 {{ snipped.field("HotEnd index", "Default number of cycles to sample while tuning", "number", "settings.plugins.CalibrationTools.pid.hotEnd.hotEndIndex", "true", "", 1, 0) }}
 {{ snipped.field("Target temperature", "Default target temperature for tuning", "number", "settings.plugins.CalibrationTools.pid.hotEnd.targetTemp", "true", "&ordmC", 1, 3, 200) }}
-{{ snipped.subSection("Bed PID", true) }}
+{{ snipped.subSection("Bed PID default values") }}
 {{ snipped.field("Fan speed", "Default value for fan speed while tuning", "number", "settings.plugins.CalibrationTools.pid.bed.fanSpeed", "true", "", 1, 0, 255) }}
 {{ snipped.field("Number of cycles", "Default number of cycles to sample while tuning", "number", "settings.plugins.CalibrationTools.pid.bed.noCycles", "true", "", 1, 3, 200) }}
 {{ snipped.field("Target temperature", "Default target temperature for tuning", "number", "settings.plugins.CalibrationTools.pid.bed.targetTemp", "true", "&ordmC", 1, 3, 200) }}

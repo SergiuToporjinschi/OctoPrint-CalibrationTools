@@ -1,5 +1,5 @@
-{% macro subSection(title, spaceBefore) %}
-{% if (spaceBefore) %} <br><br> {% endif %}
+{% macro subSection(title, spaceBefore = false) %}
+{% if (not spaceBefore) %} <br><br> {% endif %}
 <strong>{{ _(title) }}</strong>
 <hr>
 {% endmacro %}

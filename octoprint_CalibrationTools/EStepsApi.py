@@ -16,7 +16,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
     @staticmethod
     def apiCommands():
         return {
-            CMD_ESTEPS_SAVE: ['newESteps'],
+            CMD_ESTEPS_SAVE: [],
             CMD_ESTEPS_LOAD_STEPS: [],
             CMD_ESTEPS_START_EXTRUSION: ['extrudeLength','extrudeSpeed','extrudeTemp']
         }
@@ -56,11 +56,26 @@ class API(octoprint.plugin.SimpleApiPlugin):
             self._printer.commands("M104 S%(extrudeTemp)s" % data)
 
         if command == CMD_ESTEPS_SAVE:
-            eStepsSettings = self._settings.get(['eSteps'])
-            userControlsTemp = eStepsSettings.get("userControlsTemp")
-            turnOffHotend = eStepsSettings.get("turnOffHotend")
+            if "newESteps" not in data and ("newXSteps" not in data and "newYSteps" not in data and "newZSteps" not in data):
+                return flask.abort(400, {
+                    "msg": "Invalid arguments. No value provided for X,Y, Z or E steps"
+                })
+
+            stopHeater = []
+            if "newESteps" in data:
+                eStepsSettings = self._settings.get(['eSteps'])
+                userControlsTemp = eStepsSettings.get("userControlsTemp")
+                turnOffHotend = eStepsSettings.get("turnOffHotend")
+                stopHeater = ["M104 S0"] if turnOffHotend and not userControlsTemp else  []
+
+            steps = ("M92 " +
+                    ("E%(newESteps)s " % data if "newESteps" in data else "") +
+                    ("X%(newXSteps)s " % data if "newXSteps" in data else "") +
+                    ("Y%(newYSteps)s " % data if "newYSteps" in data else "") +
+                    ("Z%(newYSteps)s " % data if "newZSteps" in data else ""))
+
             #save data to EEPROM and cool-down
-            self._printer.commands(["M92 E%(newESteps)s" % data, "M500"] + ["M104 S0"] if turnOffHotend and not userControlsTemp else  [])
+            self._printer.commands([steps, "M500"] + stopHeater)
             return
 
 

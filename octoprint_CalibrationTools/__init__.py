@@ -14,13 +14,21 @@ defaultSettings = {
         "extrudeSpeed": 50,
         "markLength": 120
     },
+    "XYZSteps": {
+        "gCodeCubeSize": {
+            "X":20,
+            "Y":20,
+            "Z":20
+        }
+    },
     "pid": {
         "hotEnd":{
             "fanSpeed": 255,
             "noCycles": 8,
             "hotEndIndex": 0,
             "targetTemp": 200,
-        },"bed":{
+        },
+        "bed":{
             "fanSpeed": 255,
             "noCycles": 8,
             "hotEndIndex": -1,
@@ -55,7 +63,12 @@ class CalibrationtoolsPlugin(
         # Define your plugin's asset files to automatically include in the
         # core UI here.
         return {
-            "js": ["js/ESteps.js","js/PIDTuneViewModel.js"],
+            "js": [
+                "js/GeneralViewModel.js",
+                "js/EStepsViewModel.js",
+                "js/PIDTuneViewModel.js",
+                "js/XYZStepsViewModel.js"
+            ],
             "css": ["css/style.css"]
         }
 

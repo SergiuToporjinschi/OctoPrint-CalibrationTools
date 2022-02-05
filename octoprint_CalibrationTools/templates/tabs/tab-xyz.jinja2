@@ -1,1 +1,90 @@
-Something in xyz tab...
+{% import "macros.jinja2" as snipped %}
+
+{{ snipped.subSection("Current PID values", true) }}
+<div class="row-fluid">
+    <div class="span3">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+            Current values
+        </label>
+    </div>
+    <div class="span9">
+        <div class="input-prepend input-append">
+            {{ snipped.linkToMarlin("M092", "Marlin website") }}
+            <span class="add-on" title="">M92&nbsp;&nbsp;&nbsp;X</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.currentSteps.X, enable: false">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Y</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.currentSteps.Y, enable: false">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Z</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.currentSteps.Z, enable: false">
+            <button class="btn" data-bind="click: $root.loadESteps, enable: $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+                title="Loads current value from EEPROM by calling M92">
+                <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span3">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+            GCode cube size
+        </label>
+    </div>
+    <div class="span9">
+        <div class="input-prepend input-append">
+            <span class="add-on" title="">X</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.gCodeCubeSize.X">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Y</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.gCodeCubeSize.Y">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Z</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.gCodeCubeSize.Z">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;mm</span>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span3">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+            Printed cube size
+        </label>
+    </div>
+    <div class="span9">
+        <div class="input-prepend input-append">
+            <span class="add-on" title="">X</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.printedCubeSize.X">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Y</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.printedCubeSize.Y">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Z</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.printedCubeSize.Z">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;mm</span>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span3">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+            New values
+        </label>
+    </div>
+    <div class="span9">
+        <div class="input-prepend input-append">
+            {{ snipped.linkToMarlin("M092", "Marlin website") }}
+            <span class="add-on" title="">M92&nbsp;&nbsp;&nbsp;X</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.newSteps.X">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Y</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.newSteps.Y">
+            <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Z</span>
+            <input type="number" id="" class="input-small" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.newSteps.Z">
+            {{ snipped.m500Icon() }}
+        </div>
+    </div>
+</div>
+<div class="row-fluid" style="margin-bottom: 5px;">
+    <div class="span3"></div>
+    <div class="span9">
+        <button class="btn btn-success" data-bind="click: $root.saveEStepsXYZ, enable: $root.saveEStepsXYZActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            title="This will save new values to EEPROM (M92 Xx Yx Zx; M500)">
+            <i class="fas fa-save" style="color:false" data-color="false"></i>&nbsp&nbsp
+            Save to EEPROM
+        </button>
+    </div>
+</div>
