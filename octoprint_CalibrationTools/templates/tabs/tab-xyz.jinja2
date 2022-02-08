@@ -26,7 +26,8 @@ sized.","<a href='https://teachingtechyt.github.io/calibration.html#xyzsteps' ta
             <input type="number" id="" class="input-small numberDisplay" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.currentSteps.Y, enable: false">
             <span class="add-on" title="">&nbsp;&nbsp;&nbsp;Z</span>
             <input type="number" id="" class="input-small numberDisplay" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.currentSteps.Z, enable: false">
-            <button class="btn" data-bind="click: $root.loadESteps, enable: $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            <button class="btn"
+                data-bind="click: $root.loadESteps, enable: $root.loginStateViewModel.isAdmin() && $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
                 title="Loads current value from EEPROM by calling M92">
                 <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>
             </button>
@@ -91,7 +92,8 @@ sized.","<a href='https://teachingtechyt.github.io/calibration.html#xyzsteps' ta
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div data-bind="class: $root.columnLabelCls()"></div>
     <div data-bind="class: $root.columnFieldCls()">
-        <button class="btn btn-success" data-bind="click: $root.saveEStepsXYZ, enable: $root.saveEStepsXYZActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        <button class="btn btn-success"
+            data-bind="click: $root.saveEStepsXYZ, enable: $root.loginStateViewModel.isAdmin() && $root.saveEStepsXYZActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will save new values to EEPROM (M92 Xx Yx Zx; M500)">
             <i class="fas fa-save" style="color:false" data-color="false"></i>&nbsp&nbsp
             Save to EEPROM
