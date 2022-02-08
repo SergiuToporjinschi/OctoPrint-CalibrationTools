@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import octoprint.plugin
 
 from octoprint_CalibrationTools import api, hooks, models
+from octoprint_CalibrationTools.AutoTuneBLP import AutoTuneBLP
 
 defaultSettings = {
     "eSteps": {
@@ -44,7 +45,8 @@ class CalibrationtoolsPlugin(
     octoprint.plugin.AssetPlugin,
     api.API,
     hooks.Hooks,
-    models.CalibrationModel
+    models.CalibrationModel,
+    AutoTuneBLP.AutoTuneBLP
 ):
     collectCommand = False
     data = {}
