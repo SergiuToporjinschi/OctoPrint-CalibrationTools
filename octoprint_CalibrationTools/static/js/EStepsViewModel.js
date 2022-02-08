@@ -15,7 +15,6 @@ $(function () {
             return self.generalVM.isSmall() ? "span8" : "span9";
         });
 
-        self.is_admin = ko.observable(false);
         self.steps = ko.observable();
         self.steps["X"] = ko.observable();
         self.steps["Y"] = ko.observable();
@@ -45,7 +44,6 @@ $(function () {
             self.testParam.extrudeLength(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeLength());
             self.testParam.extrudeSpeed(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeSpeed());
             self.testParam.markLength(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.markLength());
-            self.is_admin(self.loginStateViewModel.isAdmin());
         }
 
         self.from_json = function (response) {

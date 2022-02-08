@@ -64,7 +64,7 @@ reliable.
     <div data-bind="class: $root.columnLabelCls()"></div>
     <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-success"
-            data-bind="click: $root.startExtrusion, enable: !$root.startExtrusionActive() && $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            data-bind="click: $root.startExtrusion, enable: !$root.startExtrusionActive() && $root.loginStateViewModel.isAdmin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
             Start extrusion
@@ -84,7 +84,8 @@ reliable.
         <div class="input-append">
             <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E(), enable:false">
             <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
-            <button class="btn" data-bind="click: $root.loadESteps, enable: $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+            <button class="btn"
+                data-bind="click: $root.loadESteps, enable: $root.loginStateViewModel.isAdmin() && $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
                 title="Loads current value of steps/mm from EEPROM by calling M92">
                 <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>
             </button>
@@ -114,7 +115,7 @@ reliable.
 <div class="row-fluid" style="margin-bottom: 5px;">
     <div data-bind="class: $root.columnLabelCls()"></div>
     <div data-bind="class: $root.columnFieldCls()">
-        <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
+        <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.loginStateViewModel.isAdmin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="Saves the new calculated value of steps/mm on printer EEPROM">
             <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
             Save the new value
