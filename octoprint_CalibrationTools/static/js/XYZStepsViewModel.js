@@ -89,7 +89,6 @@ $(function () {
             self.eStepsXYZ.printedCubeSize.Y(self.settingsViewModel.settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Y());
             self.eStepsXYZ.printedCubeSize.Z(self.settingsViewModel.settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Z());
 
-            self.isAdmin(self.loginStateViewModel.isAdmin());
         }
     }
     OCTOPRINT_VIEWMODELS.push({

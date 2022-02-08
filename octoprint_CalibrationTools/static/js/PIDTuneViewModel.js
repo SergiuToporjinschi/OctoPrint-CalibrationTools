@@ -69,7 +69,6 @@ $(function () {
             self.pid.bed.index(-1);
             self.pid.bed.noCycles(self.settingsViewModel.settings.plugins.CalibrationTools.pid.bed.noCycles());
             self.pid.bed.targetTemp(self.settingsViewModel.settings.plugins.CalibrationTools.pid.bed.targetTemp());
-            self.isAdmin(self.loginStateViewModel.isAdmin());
         }
 
         self.startPidHotEnd = function () {
