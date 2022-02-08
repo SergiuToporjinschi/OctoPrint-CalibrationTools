@@ -17,12 +17,12 @@ prefer to start this process with the hot end at room temperature.",
 
 {{ snipped.subSection("Current PID values", true) }}
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="hotEndPid" class="pull-right" style="margin-top: 5px;" title="Current hot-end PID">
             Current hot-end PID
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append" id="hotEndPid">
             <span class="add-on" title="Proportional gain">P</span>
             <span class="add-on numberDisplay" title="Proportional gain" data-bind="text: $root.pidCurrentValues.hotEnd.P()"></span>
@@ -34,12 +34,12 @@ prefer to start this process with the hot end at room temperature.",
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="bedPid" class="pull-right" style="margin-top: 5px;" title="Current bed PID">
             Current bed PID
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append" id="bedPid">
             <span class="add-on" title="Proportional gain">P</span>
             <span class="add-on numberDisplay" title="Proportional gain" data-bind="text: $root.pidCurrentValues.bed.P()"></span>
@@ -51,9 +51,9 @@ prefer to start this process with the hot end at room temperature.",
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append" id="bedPid">
             <button class="btn" data-bind="click: $root.getCurrentValues, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())" title="Load current PIDs">
                 <i class="fas fa-sync-alt" style="color:false" data-color="false"></i>&nbsp&nbsp
@@ -65,12 +65,12 @@ prefer to start this process with the hot end at room temperature.",
 
 {{ snipped.subSection("Hot-end tuning") }}
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="fanSpeed" class="pull-right" style="margin-top: 5px;" title="Fan speed">
             Turn fan to max
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M106", "Marlin website") }}
             <span class="add-on" title="Command for turning the fan to 100%">M106&nbsp;&nbsp;&nbsp;S</span>
@@ -79,12 +79,12 @@ prefer to start this process with the hot end at room temperature.",
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
             Tuning PID
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M303", "Marlin website") }}
             <span class="add-on" title="Command for triggering tool PID tunning">M303&nbsp;&nbsp;&nbsp;C</span>
@@ -100,8 +100,8 @@ prefer to start this process with the hot end at room temperature.",
 </div>
 
 <div class="row-fluid" style="margin-bottom: 5px;">
-    <div class="span5"></div>
-    <div class="span7">
+    <div data-bind="class: $root.columnLabelCls()"></div>
+    <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-success" data-bind="click: $root.startPidHotEnd, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger PID auto tuning (M106 Sx; M303 Ex Sx U1; M500)">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp
@@ -112,12 +112,12 @@ prefer to start this process with the hot end at room temperature.",
 
 {{ snipped.subSection("Heated bed tuning") }}
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="fanSpeed" class="pull-right" style="margin-top: 5px;" title="Fan speed">
             Turn fan to max
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M106", "Marlin website") }}
             <span class="add-on" title="Command for turning the fan to 100%">M106&nbsp;&nbsp;&nbsp;S</span>
@@ -126,12 +126,12 @@ prefer to start this process with the hot end at room temperature.",
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span5">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
             Tuning PID
         </label>
     </div>
-    <div class="span7">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M303", "Marlin website") }}
             <span class="add-on" title="Command for triggering bed PID tunning">M303&nbsp;&nbsp;&nbsp;C</span>
@@ -147,8 +147,8 @@ prefer to start this process with the hot end at room temperature.",
 </div>
 
 <div class="row-fluid" style="margin-bottom: 5px;">
-    <div class="span5"></div>
-    <div class="span7">
+    <div data-bind="class: $root.columnLabelCls()"></div>
+    <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-success" data-bind="click: $root.startPidBed, enable: $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger PID auto tuning (M303 E-1 Sx U1; M500)">
             <i class="fas fa-play" style="color:false" data-color="false"></i>&nbsp&nbsp

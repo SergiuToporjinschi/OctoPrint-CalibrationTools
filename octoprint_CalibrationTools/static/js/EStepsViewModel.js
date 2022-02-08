@@ -6,6 +6,14 @@ $(function () {
         self.controlViewModel = parameters[2];
         self.terminalViewModel = parameters[3];
         self.access = parameters[4];
+        self.generalVM = parameters[5];
+
+        self.columnLabelCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span4" : "span3";
+        });
+        self.columnFieldCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span8" : "span9";
+        });
 
         self.is_admin = ko.observable(false);
         self.steps = ko.observable();
@@ -69,7 +77,6 @@ $(function () {
                     text: "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ",
                     type: "warning"
                 });
-                console.log(response);
             }).fail(function (response) {
                 new PNotify({
                     title: "Error on starting extrusion ",
@@ -109,7 +116,7 @@ $(function () {
         // This is a list of dependencies to inject into the plugin, the order which you request
         // here is the order in which the dependencies will be injected into your view model upon
         // instantiation via the parameters argument
-        dependencies: ["loginStateViewModel", "settingsViewModel", "controlViewModel", "terminalViewModel", "accessViewModel"],
+        dependencies: ["loginStateViewModel", "settingsViewModel", "controlViewModel", "terminalViewModel", "accessViewModel", "calibrationToolsGeneralViewModel"],
         // Finally, this is the list of selectors for all elements we want this view model to be bound to.
         elements: ["#calibration_eSteps"]
     });

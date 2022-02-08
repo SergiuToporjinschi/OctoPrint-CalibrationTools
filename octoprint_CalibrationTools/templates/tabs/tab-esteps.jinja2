@@ -25,12 +25,12 @@ reliable.
 
 <!-- M104 S210 command  -->
 <div class="row-fluid">
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="temperature" class="pull-right" style="margin-top: 5px;" title="x">
             Heating
         </label>
     </div>
-    <div class="span6">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M104", "Marlin website") }}
             <span class="add-on" title="Command to preheat the tool before testing">M104&nbsp;&nbsp;&nbsp;S</span>
@@ -41,12 +41,12 @@ reliable.
 </div>
 <!-- G1 E100 F50 command  -->
 <div class="row-fluid">
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="extrusionLenSpeed" class="pull-right" style="margin-top: 5px;" title="x">
             Extrusion length & speed
         </label>
     </div>
-    <div class="span6">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("G000-G001", "Marlin website") }}
             <span class="add-on" title="Command to extrude filament for testing">G1&nbsp;&nbsp;&nbsp;E</span>
@@ -61,8 +61,8 @@ reliable.
 {{ snipped.field("Extrusion marking length", "The length marked on filament before extrusion. ", "number", "$root.testParam.markLength", "true", "mm", 0.01, 50) }}
 
 <div class="row-fluid" style="margin-bottom: 5px;">
-    <div class="span6"></div>
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()"></div>
+    <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-success"
             data-bind="click: $root.startExtrusion, enable: !$root.startExtrusionActive() && $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will trigger M90, M83, G1 E100 F50, M82, G90 in order for extruding filament">
@@ -75,12 +75,12 @@ reliable.
 {{ snipped.subSection("Results") }}
 
 <div class="row-fluid">
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="eSteps" class="pull-right" style="margin-top: 5px;" title="Current value for number of steps/mm for E axe in EEPROM">
             E steps
         </label>
     </div>
-    <div class="span6">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-append">
             <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E(), enable:false">
             <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
@@ -97,12 +97,12 @@ reliable.
 
 <!-- M92 E900 -->
 <div class="row-fluid">
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()">
         <label for="newESteps" class="pull-right" style="margin-top: 5px;" title="The new calculated number of steps/mm for E axe">
             New E axe steps/mm
         </label>
     </div>
-    <div class="span6">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M092", "Marlin website") }}
             <span class="add-on" title="Command to change number of steps/mm for E axe" data-bind="text: $root.results.newStepsDisplay"></span>
@@ -112,8 +112,8 @@ reliable.
 </div>
 
 <div class="row-fluid" style="margin-bottom: 5px;">
-    <div class="span6"></div>
-    <div class="span6">
+    <div data-bind="class: $root.columnLabelCls()"></div>
+    <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-primary" data-bind="click: $root.saveESteps, enable: $root.is_admin() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="Saves the new calculated value of steps/mm on printer EEPROM">
             <i class="fas fa-save" data-color="#000000"></i>&nbsp&nbsp
