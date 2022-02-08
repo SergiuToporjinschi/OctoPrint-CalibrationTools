@@ -1,13 +1,23 @@
 {% import "macros.jinja2" as snipped %}
 
+{{ snipped.subSection("Process description", true) }}
+You will have to:
+<lu>
+    <li>Print a <a href="https://www.thingiverse.com/thing:1278865" target="_blank">test cube</a> with a known size on all three axes X,Y,X;</li>
+    <li>Refresh the current values from EEPROM;</li>
+    <li>Feed data collected in E-Steps tab and save the results in EEPROM;</li>
+</lu>
+<br>
+{{ snipped.quote("This step is not necessary for many people, but is still worth doing if you are going over the machine in detail. Consider this procedure necessary if your printed parts are clearly over or under
+sized.","<a href='https://teachingtechyt.github.io/calibration.html#xyzsteps' target='_blank'>teachingtechyt.github.io</a>", "text-warning") }}
 {{ snipped.subSection("X-Y-Z Steps", true) }}
 <div class="row-fluid">
-    <div class="span3">
-        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+    <div data-bind="class: $root.columnLabelCls()">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px; white-space: nowrap;" title="x">
             Current values
         </label>
     </div>
-    <div class="span9">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M092", "Marlin website") }}
             <span class="add-on" title="">M92&nbsp;&nbsp;&nbsp;X</span>
@@ -24,12 +34,12 @@
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span3">
-        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
-            GCode cube size
+    <div data-bind="class: $root.columnLabelCls()">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px; white-space: nowrap;" title="">
+            GCode sizes
         </label>
     </div>
-    <div class="span9">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             <span class="add-on" title="">X</span>
             <input type="number" id="" class="input-small numberDisplay" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.gCodeCubeSize.X">
@@ -42,12 +52,12 @@
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span3">
-        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
-            Printed cube size
+    <div data-bind="class: $root.columnLabelCls()">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px; white-space: nowrap;" title="">
+            Printed sizes
         </label>
     </div>
-    <div class="span9">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             <span class="add-on" title="">X</span>
             <input type="number" id="" class="input-small numberDisplay" step="0.001" min="0" max="100" title="" data-bind="value: $root.eStepsXYZ.printedCubeSize.X">
@@ -60,12 +70,12 @@
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span3">
-        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px;" title="x">
+    <div data-bind="class: $root.columnLabelCls()">
+        <label for="tunningPIDNoCycles" class="pull-right" style="margin-top: 5px; white-space: nowrap;" title="">
             New values
         </label>
     </div>
-    <div class="span9">
+    <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M092", "Marlin website") }}
             <span class="add-on" title="">M92&nbsp;&nbsp;&nbsp;X</span>
@@ -79,8 +89,8 @@
     </div>
 </div>
 <div class="row-fluid" style="margin-bottom: 5px;">
-    <div class="span3"></div>
-    <div class="span9">
+    <div data-bind="class: $root.columnLabelCls()"></div>
+    <div data-bind="class: $root.columnFieldCls()">
         <button class="btn btn-success" data-bind="click: $root.saveEStepsXYZ, enable: $root.saveEStepsXYZActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
             title="This will save new values to EEPROM (M92 Xx Yx Zx; M500)">
             <i class="fas fa-save" style="color:false" data-color="false"></i>&nbsp&nbsp

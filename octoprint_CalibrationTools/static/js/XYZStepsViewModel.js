@@ -4,28 +4,33 @@ $(function () {
         self.loginStateViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
         self.controlViewModel = parameters[2];
-        generalVM = parameters[5];
-
+        self.generalVM = parameters[5];
+        self.columnLabelCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span2" : "span3";
+        });
+        self.columnFieldCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span10" : "span9";
+        });
         self.eStepsXYZ = {
             currentSteps: {
-                X: ko.observable(0).extend(generalVM.decimal3(0.000)),
-                Y: ko.observable(0).extend(generalVM.decimal3(0.000)),
-                Z: ko.observable(0).extend(generalVM.decimal3(0.000))
+                X: ko.observable(0).extend(self.generalVM.decimal3(0.000)),
+                Y: ko.observable(0).extend(self.generalVM.decimal3(0.000)),
+                Z: ko.observable(0).extend(self.generalVM.decimal3(0.000))
             },
             gCodeCubeSize: {
-                X: ko.observable().extend(generalVM.decimal3(22.000)),
-                Y: ko.observable().extend(generalVM.decimal3(22.000)),
-                Z: ko.observable().extend(generalVM.decimal3(22.000))
+                X: ko.observable().extend(self.generalVM.decimal3(22.000)),
+                Y: ko.observable().extend(self.generalVM.decimal3(22.000)),
+                Z: ko.observable().extend(self.generalVM.decimal3(22.000))
             },
             printedCubeSize: {
-                X: ko.observable().extend(generalVM.decimal3(25.000)),
-                Y: ko.observable().extend(generalVM.decimal3(25.000)),
-                Z: ko.observable().extend(generalVM.decimal3(25.000))
+                X: ko.observable().extend(self.generalVM.decimal3(25.000)),
+                Y: ko.observable().extend(self.generalVM.decimal3(25.000)),
+                Z: ko.observable().extend(self.generalVM.decimal3(25.000))
             },
             newSteps: {
-                X: ko.observable().extend(generalVM.decimal3(0.000)),
-                Y: ko.observable().extend(generalVM.decimal3(0.000)),
-                Z: ko.observable().extend(generalVM.decimal3(0.000))
+                X: ko.observable().extend(self.generalVM.decimal3(0.000)),
+                Y: ko.observable().extend(self.generalVM.decimal3(0.000)),
+                Z: ko.observable().extend(self.generalVM.decimal3(0.000))
             }
         };
 
@@ -69,7 +74,9 @@ $(function () {
             })
         };
 
-
+        // self.labelColumnCss = viewModel.profitStatus = ko.pureComputed(function () {
+        //     return "span3" $("#tab_plugin_CalibrationTools").width() < 800
+        // });
 
         self.isAdmin = ko.observable(false);
 

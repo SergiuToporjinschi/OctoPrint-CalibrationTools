@@ -9,6 +9,7 @@ $(function () {
                 }
             }
         }
+        this.isSmall = ko.observable($("#tab_plugin_CalibrationTools").width() < 800);
         ko.extenders.numeric = function (target, options) {
             var returnObs = ko.pureComputed({
                 read: target,
@@ -22,8 +23,11 @@ $(function () {
             returnObs(target());
             return returnObs;
         };
+
+        this.onStartupComplete = function () {
+            this.isSmall($("#tabs_content").width() < 800);
+        }
     }
-    // OCTOPRINT_VIEWMODELS.push([GeneralViewModel, ["loginStateViewModel"], []]);
     OCTOPRINT_VIEWMODELS.push({
         // This is the constructor to call for instantiating the plugin
         construct: CalibrationToolsGeneralViewModel,

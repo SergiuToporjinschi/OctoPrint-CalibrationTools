@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="main row-fluid">
-        <div class="span3">
+        <div id="navigation" class="span3" data-bind="css: {span0: $root.generalVM.isSmall(), span3: !$root.generalVM.isSmall()}">
             <ul class="nav nav-list">
                 <li class="active">
                     <a data-toggle="tab" href="#calibration_documentation">Documentation</a>
@@ -40,7 +40,7 @@
                 </li>
             </ul>
         </div>
-        <div class="span9">
+        <div id="calibrationTool_content" class="span9">
             {% include "tabs/tab-content.jinja2" %}
         </div>
     </div>
@@ -49,12 +49,17 @@
 {% block script%}
 <script type="text/javascript">
     OCTOPRINT_VIEWMODELS.push({
-        construct: function () {
-            this.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
-
-            this.test = function () {
+        construct: function (parameters) {
+            self = this;
+            self.generalVM = parameters[0];
+            self.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
+            self.test = function () {
                 OctoPrint.simpleApiCommand("CalibrationTools", "pid_save").done(function (response) {
-                    console.log(response)
+                    new PNotify({
+                        title: "Saved",
+                        text: "PID values successfully saved",
+                        type: "info"
+                    });
                 }).fail(function (response) {
                     new PNotify({
                         title: "Test request",
@@ -64,14 +69,21 @@
                 });
             };
 
-            this.onSettingsClick = function () {
+            self.onSettingsClick = function () {
                 $('a#navbar_show_settings').click();
                 $('li#settings_plugin_CalibrationTools_link a').click();
                 $("#settings_plugin_CalibrationTools").click();
             };
+            self.onStartupComplete = function () {
+                if (self.generalVM.isSmall()) {
+                    $("#calibrationTool_content").removeClass("span9");
+                    $("#calibrationTool_content").addClass("span12");
+                }
+            }
         },
         // dependencies: ["terminalViewModel"],
-        elements: ["#toolBar"]
+        elements: ["#toolBar", "#navigation"],
+        dependencies: ["calibrationToolsGeneralViewModel"],
     });
 </script>
 {% endblock %}

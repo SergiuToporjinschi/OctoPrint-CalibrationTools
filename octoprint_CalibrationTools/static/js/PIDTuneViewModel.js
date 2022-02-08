@@ -4,7 +4,13 @@ $(function () {
         self.loginStateViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
         self.controlViewModel = parameters[2];
-
+        self.generalVM = parameters[5];
+        self.columnLabelCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span3" : "span3";
+        });
+        self.columnFieldCls = ko.computed(function () {
+            return self.generalVM.isSmall() ? "span9" : "span9";
+        });
         self.pidCurrentValues = {
             "hotEnd": {
                 "P": ko.observable(0),
@@ -79,7 +85,6 @@ $(function () {
                     text: "In progress",
                     type: "info"
                 });
-                console.log(response);
             }).fail(function (response) {
                 new PNotify({
                     title: "Error on starting PID autotune ",
@@ -102,7 +107,6 @@ $(function () {
                     text: "In progress",
                     type: "info"
                 });
-                console.log(response);
             }).fail(function (response) {
                 new PNotify({
                     title: "Error on starting PID autotune ",
@@ -119,7 +123,7 @@ $(function () {
         // This is a list of dependencies to inject into the plugin, the order which you request
         // here is the order in which the dependencies will be injected into your view model upon
         // instantiation via the parameters argument
-        dependencies: ["loginStateViewModel", "settingsViewModel", "controlViewModel", "terminalViewModel", "accessViewModel"],
+        dependencies: ["loginStateViewModel", "settingsViewModel", "controlViewModel", "terminalViewModel", "accessViewModel", "calibrationToolsGeneralViewModel"],
         // Finally, this is the list of selectors for all elements we want this view model to be bound to.
         elements: ["#calibration_pid"]
     });
