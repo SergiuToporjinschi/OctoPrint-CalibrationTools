@@ -1,11 +1,21 @@
 {% import "macros.jinja2" as snipped %}
 
-{{ snipped.subSection("Note", true) }}
+{{ snipped.subSection("Process description", true) }}
+You will have to:
+<lu>
+    <li>Refresh the current values from EEPROM;</li>
+    <li>Set the hot-end index which you want to tune;</li>
+    <li>Set the usual temperature used in your prints for that specific hot-end;</li>
+    <li>Set the usual fan speed used in your prints;</li>
+    <li>Monitor temperature tab, when it starts to cool down save the results in EEPROM;</li>
+    <li>For tuning heated bed the index is already set on -1;</li>
+</lu>
+<br>
 {{ snipped.quote("It is recommended to run the tuning with conditions as close to printing as possible. This means filament loaded and the part cooling fan set to your normal speed. It is not essential, but you may
 prefer to start this process with the hot end at room temperature.",
 "<a href='https://teachingtechyt.github.io/calibration.html#pid' target='_blank'>For more information about how to use this visit teachingtechyt.github.io</a>", "text-warning") }}
 
-{{ snipped.subSection("Current PID values") }}
+{{ snipped.subSection("Current PID values", true) }}
 <div class="row-fluid">
     <div class="span5">
         <label for="hotEndPid" class="pull-right" style="margin-top: 5px;" title="Current hot-end PID">

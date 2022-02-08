@@ -1,5 +1,15 @@
 {% import "macros.jinja2" as snipped %}
 
+{{ snipped.subSection("Process description", true) }}
+You will have to:
+<lu>
+    <li>Print a <a href="https://www.thingiverse.com/thing:1278865" target="_blank">test cube</a> with a known size on all three axes X,Y,X;</li>
+    <li>Refresh the current values from EEPROM;</li>
+    <li>Feed data collected in E-Steps tab and save the results in EEPROM;</li>
+</lu>
+<br>
+{{ snipped.quote("This step is not necessary for many people, but is still worth doing if you are going over the machine in detail. Consider this procedure necessary if your printed parts are clearly over or under
+sized.","<a href='https://teachingtechyt.github.io/calibration.html#xyzsteps' target='_blank'>teachingtechyt.github.io</a>", "text-warning") }}
 {{ snipped.subSection("X-Y-Z Steps", true) }}
 <div class="row-fluid">
     <div class="span3">

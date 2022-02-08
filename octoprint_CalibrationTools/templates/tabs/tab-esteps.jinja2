@@ -1,15 +1,27 @@
 {% import "macros.jinja2" as snipped %}
 
 {{ snipped.subSection("Process description", true) }}
+
+You will have to:
+<lu>
+    <li>Mark a specific length of filament at the extruder motor entrance;</li>
+    <li>Set the hot-end on a printing temperature in E-Steps tab;</li>
+    <li>Set the extrusion length and speed;</li>
+    <li>Press "Start extrusion";</li>
+    <li>When extrusion finished, check the remaining length between the extruder and the filament mark location;</li>
+    <li>Refresh the current values from EEPROM;</li>
+    <li>Feed data collected in E-Steps tab and save the results in EEPROM;</li>
+</lu>
+<br>
 {{ snipped.quote("
 This calibration is best done with the extruder detached from the hot end, so no restriction is present on the movement. If it is convenient, you can partially disassemble the printer so the output of the extruder is
 open and the filament exits in free air. If this is inconvenient, the process below aims to minimize restrictions by extruding very slowly and with a slightly higher temperature. The results from this should still be
 reliable.
 ", "
-<a href='https://teachingtechyt.github.io/calibration.html#esteps' target='_blank'>For more information about how to use this visit teachingtechyt.github.io</a>
+<a href='https://teachingtechyt.github.io/calibration.html#esteps' target='_blank'>teachingtechyt.github.io</a>
 ", "text-warning") }}
 
-{{ snipped.subSection("Test parameters") }}
+{{ snipped.subSection("Parameters", true) }}
 
 <!-- M104 S210 command  -->
 <div class="row-fluid">
@@ -60,7 +72,7 @@ reliable.
     </div>
 </div>
 
-{{ snipped.subSection("Test results") }}
+{{ snipped.subSection("Results") }}
 
 <div class="row-fluid">
     <div class="span6">
