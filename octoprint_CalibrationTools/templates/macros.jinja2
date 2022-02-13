@@ -42,6 +42,27 @@
 </div>
 {% endmacro %}
 
+{% macro fieldSettings(label, title, type, binding, enable, unit, step, min, max) %}
+{% set step = step|default('0.01') %}
+{% set min = min|default("") %}
+{% set max = max|default("") %}
+{% set unit = unit|trim|default("") %}
+<div class="row-fluid">
+    <div class="span6">
+        <label for="{{ label }}" class="pull-right" style="margin-top: 5px;" title="{{ title }}">
+            {{ _(label) }}
+        </label>
+    </div>
+    <div class="span6">
+        <div class="input-append">
+            <input type="{{ type }}" id="{{ label }}" title="{{ title }}" class="input-small" step="{{ step }}" min="{{ min }}" max="{{ max }}" data-bind="value: {{ binding }}, enable: {{ enable }}">
+            {% if unit != "" %}
+            <span class="add-on" title="{{ title }}">{{ _(unit) }}</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endmacro %}
 
 {% macro labelField(label, title, type, binding, enable, unit, step, min, max) %}
 {% set step = step|default('0.01') %}
