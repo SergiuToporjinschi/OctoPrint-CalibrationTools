@@ -87,7 +87,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
     @staticmethod
     def m92GCodeResponse(self, line, regex, event):
-        reg = re.compile("echo:\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
+        reg = re.compile("(echo:?)\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
         isM92command = reg.match(line)
         if isM92command:
             command = isM92command.group("command")

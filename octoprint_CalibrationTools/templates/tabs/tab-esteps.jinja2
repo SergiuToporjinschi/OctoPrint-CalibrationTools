@@ -106,7 +106,8 @@ reliable.
     <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M092", "Marlin website") }}
-            <span class="add-on" title="Command to change number of steps/mm for E axe" data-bind="text: $root.results.newStepsDisplay"></span>
+            <span class="add-on" title="Command to change number of steps/mm for E axe">M92 E</span>
+            <input type="number" title="Command to change number of steps/mm for E axe" class="input-small numberDisplay" step="0.01" min="10" max="400" data-bind="value: $root.results.newSteps(), enable:false">
             {{ snipped.m500Icon() }}
         </div>
     </div>

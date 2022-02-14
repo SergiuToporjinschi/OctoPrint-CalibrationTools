@@ -30,14 +30,14 @@ $(function () {
         self.results = {};
         self.results["remainedLength"] = ko.observable(20);
         self.results["actualExtrusion"] = ko.computed(function () {
-            return self.testParam.markLength() - self.results.remainedLength();
+            return self.generalVM.round(self.testParam.markLength() - self.results.remainedLength());
         });
         self.results["newSteps"] = ko.computed(function () {
-            return self.steps.E() / self.results.actualExtrusion() * 100;
+            return self.generalVM.round(self.steps.E() / self.results.actualExtrusion() * 100);
         });
-        self.results["newStepsDisplay"] = ko.computed(function () {
-            return "M92 E" + self.results.newSteps();
-        });
+        // self.results["newStepsDisplay"] = ko.computed(function () {
+        //     return "M92 E" + self.results.newSteps();
+        // });
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
             self.testParam.extrudeTemp(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeTemp());

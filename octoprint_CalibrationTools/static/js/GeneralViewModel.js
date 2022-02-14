@@ -48,6 +48,10 @@ $(function () {
         self.failedFunction = function (response) {
             self.notifyError("Error", response.responseJSON.error);
         }
+        self.round = function (number, decimals) {
+            decimals = decimals ? decimals : 3;
+            return +(Math.round(number + ("e+" + decimals)) + ("e-" + decimals));
+        }
     }
     OCTOPRINT_VIEWMODELS.push({
         // This is the constructor to call for instantiating the plugin

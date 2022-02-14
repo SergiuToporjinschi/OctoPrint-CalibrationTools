@@ -35,13 +35,13 @@ $(function () {
         };
         // self.generalVM.decimal3(10.000)
         self.eStepsXYZ.newSteps.X = ko.computed(function () {
-            return self.eStepsXYZ.currentSteps.X() * self.eStepsXYZ.gCodeCubeSize.X() / self.eStepsXYZ.printedCubeSize.X();
+            return self.generalVM.round(self.eStepsXYZ.currentSteps.X() * self.eStepsXYZ.gCodeCubeSize.X() / self.eStepsXYZ.printedCubeSize.X());
         }, self);
         self.eStepsXYZ.newSteps.Y = ko.computed(function () {
-            return self.eStepsXYZ.currentSteps.Y() * self.eStepsXYZ.gCodeCubeSize.Y() / self.eStepsXYZ.printedCubeSize.Y();
+            return self.generalVM.round(self.eStepsXYZ.currentSteps.Y() * self.eStepsXYZ.gCodeCubeSize.Y() / self.eStepsXYZ.printedCubeSize.Y());
         }, self);
         self.eStepsXYZ.newSteps.Z = ko.computed(function () {
-            return self.eStepsXYZ.currentSteps.Z() * self.eStepsXYZ.gCodeCubeSize.Z() / self.eStepsXYZ.printedCubeSize.Z();
+            return self.generalVM.round(self.eStepsXYZ.currentSteps.Z() * self.eStepsXYZ.gCodeCubeSize.Z() / self.eStepsXYZ.printedCubeSize.Z());
         }, self);
 
         self.loadEStepsActive = ko.observable(true);
