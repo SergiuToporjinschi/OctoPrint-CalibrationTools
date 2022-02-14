@@ -51,14 +51,7 @@ $(function () {
                 self.pidCurrentValues.bed.P(response.data.bed.P);
                 self.pidCurrentValues.bed.I(response.data.bed.I);
                 self.pidCurrentValues.bed.D(response.data.bed.D);
-            }).fail(function (response) {
-                new PNotify({
-                    title: "Error on getting current PID values ",
-                    text: response.responseJSON.error,
-                    type: "error",
-                    hide: false
-                });
-            });
+            }).fail(self.generalVM.failFunction);
         };
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
@@ -79,19 +72,8 @@ $(function () {
                 "hotEndIndex": Number(self.pid.hotEnd.hotEndIndex()),
                 "targetTemp": Number(self.pid.hotEnd.targetTemp())
             }).done(function (response) {
-                new PNotify({
-                    title: "PID HotEnd tuning has started",
-                    text: "In progress",
-                    type: "info"
-                });
-            }).fail(function (response) {
-                new PNotify({
-                    title: "Error on starting PID autotune ",
-                    text: response.responseJSON.error,
-                    type: "error",
-                    hide: false
-                });
-            });
+                self.generalVM.notifyWarning("PID HotEnd tuning has started", "In progress");
+            }).fail(self.generalVM.failFunction);
         }
         self.startPidBed = function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "pid_start", {
@@ -101,19 +83,8 @@ $(function () {
                 "hotEndIndex": -1,
                 "targetTemp": self.pid.bed.targetTemp()
             }).done(function (response) {
-                new PNotify({
-                    title: "PID HotEnd tuning has started",
-                    text: "In progress",
-                    type: "info"
-                });
-            }).fail(function (response) {
-                new PNotify({
-                    title: "Error on starting PID autotune ",
-                    text: response.responseJSON.error,
-                    type: "error",
-                    hide: false
-                });
-            });
+                self.generalVM.notifyWarning("PID Heated bed tuning has started", "In progress");
+            }).fail(self.generalVM.failFunction);
         }
     }
     OCTOPRINT_VIEWMODELS.push({

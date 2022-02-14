@@ -26,9 +26,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
             self._logger.debug("Load steps from EEPROM")
             if not self._printer.is_ready():
                 self._logger.warning("Printer not ready, operation canceled")
-                return flask.abort(503, {
-                    "msg": "Printer not ready, operation canceled"
-                })
+                return flask.abort(503, 'Printer not ready, operation canceled')
 
             # Register listener waiting response for M92 command
             m92Event = Event()
@@ -46,9 +44,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
             self._logger.debug("Heating the extruder [%s]", data)
             if not self._printer.is_ready():
                 self._logger.warning("Printer not ready, operation canceled")
-                return flask.abort(503, {
-                    "msg": "Printer not ready, operation canceled"
-                })
+                return flask.abort(503,"Printer not ready, operation canceled")
 
             # Register event to be trigger when temp is achieved
             self.registerEventTemp("T0", int(data["extrudeTemp"]), self.startExtrusion, data["extrudeLength"], data["extrudeSpeed"])
@@ -56,11 +52,12 @@ class API(octoprint.plugin.SimpleApiPlugin):
             self._printer.commands("M104 S%(extrudeTemp)s" % data)
 
         if command == CMD_ESTEPS_SAVE:
-            if "newESteps" not in data and ("newXSteps" not in data and "newYSteps" not in data and "newZSteps" not in data):
-                return flask.abort(400, {
-                    "msg": "Invalid arguments. No value provided for X,Y, Z or E steps"
-                })
-
+            if (("newESteps" not in data or data["newESteps"] <= 0)
+                and
+                (("newXSteps" not in data or data["newXSteps"] <= 0) or
+                 ("newYSteps" not in data or data["newYSteps"] <= 0) or
+                 ("newZSteps" not in data or data["newZSteps"] <= 0))):
+                return flask.abort(400, "Invalid arguments. No value provided for X,Y, Z or E steps")
             stopHeater = []
             if "newESteps" in data:
                 eStepsSettings = self._settings.get(['eSteps'])
@@ -90,7 +87,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
     @staticmethod
     def m92GCodeResponse(self, line, regex, event):
-        reg = re.compile("echo:\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
+        reg = re.compile("(echo:?)\s*(?P<command>(?P<gCode>M\d{1,3}) X(?P<xVal>\d{1,3}.\d{1,3}) Y(?P<yVal>\d{1,3}.\d{1,3}) Z(?P<zVal>\d{1,3}.\d{1,3}) E(?P<eVal>\d{1,3}.\d{1,3}))")
         isM92command = reg.match(line)
         if isM92command:
             command = isM92command.group("command")

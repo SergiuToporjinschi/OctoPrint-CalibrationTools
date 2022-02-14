@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import traceback
 
 import flask
+from werkzeug.exceptions import HTTPException
 
 from octoprint_CalibrationTools import EStepsApi, PIDAutoTune
 
@@ -35,9 +36,7 @@ class API(EStepsApi.API, PIDAutoTune.API):
             )
         except Exception as e:
             self._logger.error(traceback.format_exc())
-            return flask.abort(500, {
-                "msg": "An error curred"
-            })
+            return flask.abort(500, "An error curred")
 
     def on_api_command(self, command, data):
         try:
@@ -47,6 +46,9 @@ class API(EStepsApi.API, PIDAutoTune.API):
                     return api["cls"].apiGateWay(self, command, data)
         except Exception as e:
             self._logger.error(traceback.format_exc())
-            return flask.abort(500, {
-                "msg": "An error curred"
-            })
+            exCode = 500
+            exMessage = "An error curred"
+            if isinstance(e, HTTPException):
+                exCode = e.code
+                exMessage = e.description
+            return flask.abort(exCode, exMessage)

@@ -30,14 +30,14 @@ $(function () {
         self.results = {};
         self.results["remainedLength"] = ko.observable(20);
         self.results["actualExtrusion"] = ko.computed(function () {
-            return (self.testParam.markLength() - self.results.remainedLength()).toFixed(3);
+            return self.generalVM.round(self.testParam.markLength() - self.results.remainedLength());
         });
         self.results["newSteps"] = ko.computed(function () {
-            return (self.steps.E() / self.results.actualExtrusion() * 100).toFixed(3);
+            return self.generalVM.round(self.steps.E() / self.results.actualExtrusion() * 100);
         });
-        self.results["newStepsDisplay"] = ko.computed(function () {
-            return "M92 E" + self.results.newSteps();
-        });
+        // self.results["newStepsDisplay"] = ko.computed(function () {
+        //     return "M92 E" + self.results.newSteps();
+        // });
 
         self.onBeforeBinding = self.onUserLoggedIn = self.onUserLoggedOut = function () {
             self.testParam.extrudeTemp(self.settingsViewModel.settings.plugins.CalibrationTools.eSteps.extrudeTemp());
@@ -70,18 +70,9 @@ $(function () {
                 "extrudeLength": self.testParam.extrudeLength(),
                 "extrudeSpeed": self.testParam.extrudeSpeed()
             }).done(function (response) {
-                new PNotify({
-                    title: "E axe calibration started",
-                    text: "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ",
-                    type: "warning"
-                });
+                self.generalVM.notifyWarning("E axe calibration started", "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ")
             }).fail(function (response) {
-                new PNotify({
-                    title: "Error on starting extrusion ",
-                    text: response.responseJSON.error,
-                    type: "error",
-                    hide: false
-                });
+                self.generalVM.notifyError("Error on starting extrusion ", response.responseJSON.error);
             }).always(function (response) {
                 self.startExtrusionActive(false);
             });
@@ -91,12 +82,8 @@ $(function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_save", {
                 "newESteps": self.results.newSteps()
             }).done(function () {
-                new PNotify({
-                    title: "Saved",
-                    text: self.results.newSteps() + " steps/mm had been set for E axe",
-                    type: "info"
-                });
-            });
+                self.generalVM.notifyInfo("Saved", self.results.newSteps() + " steps/mm had been set for E axe");
+            }).fail(self.generalVM.failedFunction);
         }
 
         self.onAllBound = self.onEventConnected = function () {

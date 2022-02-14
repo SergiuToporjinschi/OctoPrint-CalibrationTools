@@ -55,18 +55,8 @@
             self.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
             self.test = function () {
                 OctoPrint.simpleApiCommand("CalibrationTools", "pid_save").done(function (response) {
-                    new PNotify({
-                        title: "Saved",
-                        text: "PID values successfully saved",
-                        type: "info"
-                    });
-                }).fail(function (response) {
-                    new PNotify({
-                        title: "Test request",
-                        text: response.responseJSON.error.msg,
-                        type: "error"
-                    });
-                });
+                    self.generalVM.notifyInfo("Saved", "PID values successfully saved");
+                }).fail(self.generalVM.failFunction);;
             };
 
             self.onSettingsClick = function () {
