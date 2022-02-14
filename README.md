@@ -16,7 +16,7 @@ Before start using this plugin I strongly recommend reading some documentation a
 ## Screens
 
 ![E-Steps](assets/eSteps.png)
-![X-Y-Z Steps](assets/featuredimage.png)
+![X-Y-Z Steps](assets/XYZSteps.png)
 ![PID Autotune](assets/PID-autotune.png)
 
 ## Setup
