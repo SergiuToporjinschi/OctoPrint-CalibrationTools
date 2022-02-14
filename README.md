@@ -15,9 +15,9 @@ Before start using this plugin I strongly recommend reading some documentation a
 
 ## Screens
 
-![E-Steps](assets/img/plugins/CalibrationTools/eSteps.png)
-![X-Y-Z Steps](assets/img/plugins/CalibrationTools/featuredimage.png)
-![PID Autotune](assets/img/plugins/CalibrationTools/PID-autotune.png)
+![E-Steps](assets/eSteps.png)
+![X-Y-Z Steps](assets/featuredimage.png)
+![PID Autotune](assets/PID-autotune.png)
 
 ## Setup
 
