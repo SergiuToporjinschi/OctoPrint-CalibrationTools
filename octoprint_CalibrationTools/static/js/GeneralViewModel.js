@@ -1,7 +1,8 @@
 $(function () {
     function CalibrationToolsGeneralViewModel(parameters) {
         this.loginState = parameters[0];
-        this.decimal3 = function (defaultVal) {
+        var self = this;
+        self.decimal3 = function (defaultVal) {
             return {
                 numeric: {
                     decimals: 3,
@@ -9,7 +10,7 @@ $(function () {
                 }
             }
         }
-        this.isSmall = ko.observable($("#tab_plugin_CalibrationTools").width() < 800);
+        self.isSmall = ko.observable($("#tab_plugin_CalibrationTools").width() < 800);
         ko.extenders.numeric = function (target, options) {
             var returnObs = ko.pureComputed({
                 read: target,
@@ -24,8 +25,28 @@ $(function () {
             return returnObs;
         };
 
-        this.onStartupComplete = function () {
+        self.onStartupComplete = function () {
             this.isSmall($("#tabs_content").width() < 800);
+        }
+        self.notify = function (title, message, type, hide) {
+            new PNotify({
+                title: title,
+                text: message,
+                type: type,
+                hide: hide
+            });
+        }
+        self.notifyError = function (title, message) {
+            self.notify(title, message, 'error', false);
+        }
+        self.notifyInfo = function (title, message) {
+            self.notify(title, message, 'info', true);
+        }
+        self.notifyWarning = function (title, message) {
+            self.notify(title, message, 'warning', false);
+        }
+        self.failedFunction = function (response) {
+            self.notifyError("Error", response.responseJSON.error);
         }
     }
     OCTOPRINT_VIEWMODELS.push({

@@ -33,15 +33,15 @@ $(function () {
                 Z: ko.observable().extend(self.generalVM.decimal3(0.000))
             }
         };
-
+        // self.generalVM.decimal3(10.000)
         self.eStepsXYZ.newSteps.X = ko.computed(function () {
-            return parseFloat(self.eStepsXYZ.currentSteps.X() * self.eStepsXYZ.gCodeCubeSize.X() / self.eStepsXYZ.printedCubeSize.X()).toFixed(3);
+            return self.eStepsXYZ.currentSteps.X() * self.eStepsXYZ.gCodeCubeSize.X() / self.eStepsXYZ.printedCubeSize.X();
         }, self);
         self.eStepsXYZ.newSteps.Y = ko.computed(function () {
-            return parseFloat(self.eStepsXYZ.currentSteps.Y() * self.eStepsXYZ.gCodeCubeSize.Y() / self.eStepsXYZ.printedCubeSize.Y()).toFixed(3);
+            return self.eStepsXYZ.currentSteps.Y() * self.eStepsXYZ.gCodeCubeSize.Y() / self.eStepsXYZ.printedCubeSize.Y();
         }, self);
         self.eStepsXYZ.newSteps.Z = ko.computed(function () {
-            return parseFloat(self.eStepsXYZ.currentSteps.Z() * self.eStepsXYZ.gCodeCubeSize.Z() / self.eStepsXYZ.printedCubeSize.Z()).toFixed(3);
+            return self.eStepsXYZ.currentSteps.Z() * self.eStepsXYZ.gCodeCubeSize.Z() / self.eStepsXYZ.printedCubeSize.Z();
         }, self);
 
         self.loadEStepsActive = ko.observable(true);
@@ -58,20 +58,17 @@ $(function () {
 
         self.saveEStepsXYZActive = ko.observable(true)
         self.saveEStepsXYZ = function () {
+            console.log(self.eStepsXYZ.newSteps.X());
             self.saveEStepsXYZActive(false);
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_save", {
                 "newXSteps": self.eStepsXYZ.newSteps.X(),
                 "newYSteps": self.eStepsXYZ.newSteps.Y(),
                 "newZSteps": self.eStepsXYZ.newSteps.Z()
             }).done(function (response) {
-                new PNotify({
-                    title: "Saved",
-                    text: "X: " + self.eStepsXYZ.newSteps.X() + "steps/mm<br>Y: " + self.eStepsXYZ.newSteps.Y() + "steps/mm<br>Z: " + self.eStepsXYZ.newSteps.Z() + " steps/mm<br> had been set for X/Y/Z axes",
-                    type: "info"
-                });
+                self.generalVM.notifyInfo("Saved", "X: " + self.eStepsXYZ.newSteps.X() + "steps/mm<br>Y: " + self.eStepsXYZ.newSteps.Y() + "steps/mm<br>Z: " + self.eStepsXYZ.newSteps.Z() + " steps/mm<br> had been set for X/Y/Z axes");
             }).always(function (response) {
                 self.saveEStepsXYZActive(true);
-            })
+            }).fail(self.generalVM.failedFunction)
         };
 
         // self.labelColumnCss = viewModel.profitStatus = ko.pureComputed(function () {
@@ -88,7 +85,6 @@ $(function () {
             self.eStepsXYZ.printedCubeSize.X(self.settingsViewModel.settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.X());
             self.eStepsXYZ.printedCubeSize.Y(self.settingsViewModel.settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Y());
             self.eStepsXYZ.printedCubeSize.Z(self.settingsViewModel.settings.plugins.CalibrationTools.XYZSteps.gCodeCubeSize.Z());
-
         }
     }
     OCTOPRINT_VIEWMODELS.push({
