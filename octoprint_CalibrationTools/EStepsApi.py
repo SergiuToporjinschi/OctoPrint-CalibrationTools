@@ -69,7 +69,7 @@ class API(octoprint.plugin.SimpleApiPlugin):
                     ("E%(newESteps)s " % data if "newESteps" in data else "") +
                     ("X%(newXSteps)s " % data if "newXSteps" in data else "") +
                     ("Y%(newYSteps)s " % data if "newYSteps" in data else "") +
-                    ("Z%(newYSteps)s " % data if "newZSteps" in data else ""))
+                    ("Z%(newZSteps)s " % data if "newZSteps" in data else ""))
 
             #save data to EEPROM and cool-down
             self._printer.commands([steps, "M500"] + stopHeater)
