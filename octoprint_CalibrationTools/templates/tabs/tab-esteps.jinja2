@@ -5,10 +5,10 @@
 You will have to:
 <lu>
     <li>Mark a specific length of filament at the extruder motor entrance;</li>
-    <li>Set the hot-end on a printing temperature in E-Steps tab;</li>
+    <li>Set the extruder to a normal printing temperature in E-Steps tab;</li>
     <li>Set the extrusion length and speed;</li>
     <li>Press "Start extrusion";</li>
-    <li>When extrusion finished, check the remaining length between the extruder and the filament mark location;</li>
+    <li>When extrusion finishes, check the remaining length between the extruder and the filament mark location;</li>
     <li>Refresh the current values from EEPROM;</li>
     <li>Feed data collected in E-Steps tab and save the results in EEPROM;</li>
 </lu>
@@ -35,7 +35,7 @@ reliable.
             {{ snipped.linkToMarlin("M104", "Marlin website") }}
             <span class="add-on" title="Command to preheat the tool before testing">M104&nbsp;&nbsp;&nbsp;S</span>
             <input type="number" id="temperature" class="input-mini" step="1" min="180" max="280"
-                title="The temperature used to extrude in testing (&#186;C)&#013;Is better to be a bit higher then usual for reducing the nuzzle pressure" data-bind="value: $root.testParam.extrudeTemp">
+                title="The temperature used to extrude in testing (&#186;C)&#013;It is better to be a bit higher then usual for reducing the nozzle pressure" data-bind="value: $root.testParam.extrudeTemp">
         </div>
     </div>
 </div>
@@ -76,14 +76,14 @@ reliable.
 
 <div class="row-fluid">
     <div data-bind="class: $root.columnLabelCls()">
-        <label for="eSteps" class="pull-right" style="margin-top: 5px;" title="Current value for number of steps/mm for E axe in EEPROM">
-            E steps
+        <label for="eSteps" class="pull-right" style="margin-top: 5px;" title="Current value for number of steps/mm for E-Steps in EEPROM">
+            E-Steps
         </label>
     </div>
     <div data-bind="class: $root.columnFieldCls()">
         <div class="input-append">
-            <input type="number" id="eSteps" title="Current value for number of steps/mm for E axe in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E(), enable:false">
-            <span class="add-on" title="Current value for number of steps/mm for E axe in EEPROM">steps/mm</span>
+            <input type="number" id="eSteps" title="Current value for number of steps/mm for E-Steps in EEPROM" class="input-small" step="0.01" data-bind="value: $root.steps.E(), enable:false">
+            <span class="add-on" title="Current value for number of steps/mm for E-Steps in EEPROM">steps/mm</span>
             <button class="btn"
                 data-bind="click: $root.loadESteps, enable: $root.loginStateViewModel.isAdmin() && $root.loadEStepsActive() && $root.controlViewModel.isOperational() && (!$root.controlViewModel.isPrinting())"
                 title="Loads current value of steps/mm from EEPROM by calling M92">
@@ -93,21 +93,21 @@ reliable.
     </div>
 </div>
 
-{{ snipped.field("Length after extrusion", "The remained length between filament mark and extruder entry", "number", "$root.results.remainedLength", "true", "mm") }}
+{{ snipped.field("Length after extrusion", "The remaining length between filament mark and extruder entry", "number", "$root.results.remainedLength", "true", "mm") }}
 {{ snipped.field("Actual extrusion", "How much filament has been extruded", "number", "$root.results.actualExtrusion", "false", "mm") }}
 
 <!-- M92 E900 -->
 <div class="row-fluid">
     <div data-bind="class: $root.columnLabelCls()">
-        <label for="newESteps" class="pull-right" style="margin-top: 5px;" title="The new calculated number of steps/mm for E axe">
-            New E axe steps/mm
+        <label for="newESteps" class="pull-right" style="margin-top: 5px;" title="The new calculated number of steps/mm for E-Steps">
+            New E-Steps steps/mm
         </label>
     </div>
     <div data-bind="class: $root.columnFieldCls()">
         <div class="input-prepend input-append">
             {{ snipped.linkToMarlin("M092", "Marlin website") }}
-            <span class="add-on" title="Command to change number of steps/mm for E axe">M92 E</span>
-            <input type="number" title="Command to change number of steps/mm for E axe" class="input-small numberDisplay" step="0.01" min="10" max="400" data-bind="value: $root.results.newSteps(), enable:false">
+            <span class="add-on" title="Command to change number of steps/mm for E-Steps">M92 E</span>
+            <input type="number" title="Command to change number of steps/mm for E-Steps" class="input-small numberDisplay" step="0.01" min="10" max="400" data-bind="value: $root.results.newSteps(), enable:false">
             {{ snipped.m500Icon() }}
         </div>
     </div>

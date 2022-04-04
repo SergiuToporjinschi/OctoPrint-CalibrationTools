@@ -43,9 +43,9 @@ Supported tunings:
 
 - E Steps - calibrating number of steps/mm for E extruder;
 - XYZ Steps - calibrating number of steps/mm for axes X, Y and Z;
-- PID Auto-tune - calibration Proportional gain, Integral gain and Derivative values for hot-end and heated bed;
+- PID Auto-tune - calibration Proportional gain, Integral gain and Derivative values for hotend and heated bed;
 
-Before start using this plugin I strongly recommend reading some documentation about tunning [teachingtechyt.github.io](https://teachingtechyt.github.io/calibration.html){:target="_blank"}
+Before start using this plugin I strongly recommend reading some documentation about tuning [teachingtechyt.github.io](https://teachingtechyt.github.io/calibration.html){:target="_blank"}
 
 ## Supported frameworks
 
