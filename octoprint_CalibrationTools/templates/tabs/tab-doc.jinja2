@@ -3,16 +3,16 @@
 {{ snipped.quote("Before starting I strongly recommend reading some documentation about tunning <a href='https://teachingtechyt.github.io/calibration.html#intro' target='_blank'>teachingtechyt.github.io</a>","",
 "text-warning") }}
 The stepper motors divides a full rotation in a number of equal steps.
-E-Steps tuning is a process of setting the exact number of steps need it for pushing a fix amount of filament for feeding the hot-end.<br>
+E-Steps tuning is a process of setting the exact number of steps need it for pushing a fix amount of filament for feeding the hotend.<br>
 
 {{ snipped.subSection("E-Steps") }}
 You will have to:
 <lu>
     <li>Mark a specific length of filament at the extruder motor entrance;</li>
-    <li>Set the hot-end on a printing temperature in E-Steps tab;</li>
+    <li>Set the extruder to a normal printing temperature in E-Steps tab;</li>
     <li>Set the extrusion length and speed;</li>
     <li>Press "Start extrusion";</li>
-    <li>When extrusion finished, check the remaining length between the extruder and the filament mark location;</li>
+    <li>When extrusion finishes, check the remaining length between the extruder and the filament mark location;</li>
     <li>Refresh the current values from EEPROM;</li>
     <li>Feed data collected in E-Steps tab and save the results in EEPROM;</li>
 </lu>
@@ -30,8 +30,8 @@ You will have to:
 You will have to:
 <lu>
     <li>Refresh the current values from EEPROM;</li>
-    <li>Set the hot-end index which you want to tune;</li>
-    <li>Set the usual temperature used in your prints for that specific hot-end;</li>
+    <li>Set the hotend index which you want to tune;</li>
+    <li>Set the usual temperature used in your prints for that specific hotend;</li>
     <li>Set the usual fan speed used in your prints;</li>
     <li>Monitor temperature tab, when it starts to cool down save the results in EEPROM;</li>
     <li>For tuning heated bed the index is already set on -1;</li>

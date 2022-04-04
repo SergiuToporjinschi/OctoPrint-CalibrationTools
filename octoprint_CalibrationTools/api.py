@@ -36,7 +36,7 @@ class API(EStepsApi.API, PIDAutoTune.API):
             )
         except Exception as e:
             self._logger.error(traceback.format_exc())
-            return flask.abort(500, "An error curred")
+            return flask.abort(500, "An error occurred")
 
     def on_api_command(self, command, data):
         try:
@@ -47,7 +47,7 @@ class API(EStepsApi.API, PIDAutoTune.API):
         except Exception as e:
             self._logger.error(traceback.format_exc())
             exCode = 500
-            exMessage = "An error curred"
+            exMessage = "An error occurred"
             if isinstance(e, HTTPException):
                 exCode = e.code
                 exMessage = e.description

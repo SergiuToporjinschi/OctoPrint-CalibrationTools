@@ -70,7 +70,7 @@ $(function () {
                 "extrudeLength": self.testParam.extrudeLength(),
                 "extrudeSpeed": self.testParam.extrudeSpeed()
             }).done(function (response) {
-                self.generalVM.notifyWarning("E axe calibration started", "<span style='font-weight:bold; color: red;'>Heating nuzzle has started!!!</span><br> When extrusion stops you have to fulfil <b>Length after extrusion</b> and save the new value ")
+                self.generalVM.notifyWarning("E-Steps calibration started", "<span style='font-weight:bold; color: red;'>Extruder heating has started!!!</span><br> When extrusion stops you will have to fill <b>Length after extrusion</b> and save the new value ")
             }).fail(function (response) {
                 self.generalVM.notifyError("Error on starting extrusion ", response.responseJSON.error);
             }).always(function (response) {
@@ -82,7 +82,7 @@ $(function () {
             OctoPrint.simpleApiCommand("CalibrationTools", "eSteps_save", {
                 "newESteps": self.results.newSteps()
             }).done(function () {
-                self.generalVM.notifyInfo("Saved", self.results.newSteps() + " steps/mm had been set for E axe");
+                self.generalVM.notifyInfo("Saved", self.results.newSteps() + " steps/mm has been set for E-Steps");
             }).fail(self.generalVM.failedFunction);
         }
 
