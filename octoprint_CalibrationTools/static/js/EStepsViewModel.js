@@ -33,7 +33,7 @@ $(function () {
             return self.generalVM.round(self.testParam.markLength() - self.results.remainedLength());
         });
         self.results["newSteps"] = ko.computed(function () {
-            return self.generalVM.round(self.steps.E() / self.results.actualExtrusion() * 100);
+            return self.generalVM.round((self.steps.E() * self.testParam.extrudeLength()) / self.results.actualExtrusion());
         });
         // self.results["newStepsDisplay"] = ko.computed(function () {
         //     return "M92 E" + self.results.newSteps();
