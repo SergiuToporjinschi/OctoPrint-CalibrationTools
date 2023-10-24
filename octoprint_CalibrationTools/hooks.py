@@ -69,7 +69,7 @@ class Hooks():
     # Registering a temp event
     # Trigger a function when the temparature
     def registerEventTemp(self, tool, targetTemp, func, *arguments):
-        if func is None or not isinstance(func, collections.Callable):
+        if func is None or not isinstance(func, collections.abc.Callable):
             self._logger.warn("registerEventTemp: Attempt to register event without a function")
             return
 
@@ -91,7 +91,7 @@ class Hooks():
         self.registerRegexMsg(reg, func, *arguments)
 
     def registerRegexMsg(self, regex, func, *arguments):
-        if regex is None or func is None or not isinstance(func, collections.Callable):
+        if regex is None or func is None or not isinstance(func, collections.abc.Callable):
             self._logger.warn("registerRegexMsg: Attempt to register gCodeAnswer without a function or regex")
             return
 
