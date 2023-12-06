@@ -34,6 +34,12 @@ class API(octoprint.plugin.SimpleApiPlugin):
 
             # Issue M92 command
             self._printer.commands("M92")
+            # Issue M503 command to read values from EEPROM on Prusa MK3S (Marlin > Marlin 2.0.9.3)
+            # I hope I understand the Response handler correctly - that it parses the response and looks for presence of a line
+            # in the following format:
+            # M92 Xn Yn Zn En
+            self._printer.commands("M503")
+            
 
             m92Event.wait(5)
 
