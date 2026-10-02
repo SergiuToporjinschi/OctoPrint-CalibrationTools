@@ -50,7 +50,7 @@
 <script type="text/javascript">
     OCTOPRINT_VIEWMODELS.push({
         construct: function (parameters) {
-            self = this;
+            var self = this;
             self.generalVM = parameters[0];
             self.restart = function () { OctoPrint.system.executeCommand('core', 'restart') };
             self.test = function () {

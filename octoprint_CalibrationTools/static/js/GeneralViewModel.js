@@ -1,17 +1,17 @@
 $(function () {
     function CalibrationToolsGeneralViewModel(parameters) {
-        this.loginState = parameters[0];
         var self = this;
+        self.loginState = parameters[0];
         self.decimal3 = function (defaultVal) {
             return {
-                numeric: {
+                calibrationToolsNumeric: {
                     decimals: 3,
                     default: defaultVal
                 }
             }
         }
         self.isSmall = ko.observable($("#tab_plugin_CalibrationTools").width() < 800);
-        ko.extenders.numeric = function (target, options) {
+        ko.extenders.calibrationToolsNumeric = function (target, options) {
             var returnObs = ko.pureComputed({
                 read: target,
                 write: function (value) {
@@ -26,7 +26,7 @@ $(function () {
         };
 
         self.onStartupComplete = function () {
-            this.isSmall($("#tabs_content").width() < 800);
+            self.isSmall($("#tabs_content").width() < 800);
         }
         self.notify = function (title, message, type, hide) {
             new PNotify({
